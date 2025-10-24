@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 8 Analisis Bivariado variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI</title>
+  <meta name="description" content="Ejemplo mínimo" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 8 Analisis Bivariado variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Ejemplo mínimo" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 8 Analisis Bivariado variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI" />
+  
+  <meta name="twitter:description" content="Ejemplo mínimo" />
+  
+
+<meta name="author" content="Mateo Chang y Nino Cabrera" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="analisis-bivariado-variables-numericas.html"/>
+<link rel="next" href="boxplot-g3-vs-school.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1. Introducción y Objetivos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objetivo-general"><i class="fa fa-check"></i><b>1.1</b> Objetivo general</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> 2. Preparación y Estructura de los Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> Interpretacion de los datos</a></li>
+<li class="chapter" data-level="2.2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#mapa-de-valores-nulos"><i class="fa fa-check"></i><b>2.2</b> Mapa de valores Nulos</a></li>
+<li class="chapter" data-level="2.3" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-del-missingness-map"><i class="fa fa-check"></i><b>2.3</b> Interpretacion del missingness map</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html"><i class="fa fa-check"></i><b>3</b> Analisis de nuestra variable objetivo G3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-la-variable"><i class="fa fa-check"></i><b>3.1</b> Interpretacion de la variable</a></li>
+<li class="chapter" data-level="3.2" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#histograma-y-boxplot"><i class="fa fa-check"></i><b>3.2</b> Histograma y boxplot</a></li>
+<li class="chapter" data-level="3.3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-los-graficos"><i class="fa fa-check"></i><b>3.3</b> Interpretacion de los graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables características (independientes)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#interpretacion-de-las-variables-numericas-independientes"><i class="fa fa-check"></i><b>4.1</b> Interpretacion de las variables numericas independientes</a></li>
+<li class="chapter" data-level="4.2" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#boxplots-de-todas-las-num%C3%A9ricas-independientes"><i class="fa fa-check"></i><b>4.2</b> Boxplots de TODAS las numéricas independientes</a></li>
+<li class="chapter" data-level="4.3" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#interpretacion-del-histograma-y-los-boxplot"><i class="fa fa-check"></i><b>4.3</b> Interpretacion del histograma y los boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de las variables categoricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html#interpretacion-de-las-variables-categoricas"><i class="fa fa-check"></i><b>5.1</b> Interpretacion de las variables categoricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html"><i class="fa fa-check"></i><b>6</b> Distribucion de la variable School</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html#por-donde-vamos"><i class="fa fa-check"></i><b>6.1</b> Por donde vamos ?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="analisis-bivariado-variables-numericas.html"><a href="analisis-bivariado-variables-numericas.html"><i class="fa fa-check"></i><b>7</b> Analisis Bivariado variables numericas</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="analisis-bivariado-variables-numericas.html"><a href="analisis-bivariado-variables-numericas.html#interpretacion-de-las-variables-numericas"><i class="fa fa-check"></i><b>7.1</b> Interpretacion de las variables numericas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analisis-bivariado-variables-categoricas.html"><a href="analisis-bivariado-variables-categoricas.html"><i class="fa fa-check"></i><b>8</b> Analisis Bivariado variables categoricas</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="analisis-bivariado-variables-categoricas.html"><a href="analisis-bivariado-variables-categoricas.html#interpretacion-de-las-variables-categoricas-1"><i class="fa fa-check"></i><b>8.1</b> Interpretacion de las variables categoricas</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="boxplot-g3-vs-school.html"><a href="boxplot-g3-vs-school.html"><i class="fa fa-check"></i><b>9</b> Boxplot G3 vs School</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="boxplot-g3-vs-school.html"><a href="boxplot-g3-vs-school.html#pequena-interpretacion"><i class="fa fa-check"></i><b>9.1</b> Pequena interpretacion</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="librerias-usadas.html"><a href="librerias-usadas.html"><i class="fa fa-check"></i><b>10</b> LIBRERIAS USADAS</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos: Student Performance UCI</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analisis-bivariado-variables-categoricas" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Capítulo 8</span> Analisis Bivariado variables categoricas<a href="analisis-bivariado-variables-categoricas.html#analisis-bivariado-variables-categoricas" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="analisis-bivariado-variables-categoricas.html#cb1-1" tabindex="-1"></a>make_grp_g3 <span class="ot">&lt;-</span> <span class="cf">function</span>(var){</span>
+<span id="cb1-2"><a href="analisis-bivariado-variables-categoricas.html#cb1-2" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="analisis-bivariado-variables-categoricas.html#cb1-3" tabindex="-1"></a>    <span class="fu">group_by</span>(.data[[var]]) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="analisis-bivariado-variables-categoricas.html#cb1-4" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">length</span>(g3),</span>
+<span id="cb1-5"><a href="analisis-bivariado-variables-categoricas.html#cb1-5" tabindex="-1"></a>              <span class="at">media =</span> <span class="fu">mean</span>(g3),</span>
+<span id="cb1-6"><a href="analisis-bivariado-variables-categoricas.html#cb1-6" tabindex="-1"></a>              <span class="at">ds =</span> <span class="fu">sd</span>(g3),</span>
+<span id="cb1-7"><a href="analisis-bivariado-variables-categoricas.html#cb1-7" tabindex="-1"></a>              <span class="at">mediana =</span> <span class="fu">median</span>(g3),</span>
+<span id="cb1-8"><a href="analisis-bivariado-variables-categoricas.html#cb1-8" tabindex="-1"></a>              <span class="at">minimo =</span> <span class="fu">min</span>(g3),</span>
+<span id="cb1-9"><a href="analisis-bivariado-variables-categoricas.html#cb1-9" tabindex="-1"></a>              <span class="at">maximo =</span> <span class="fu">max</span>(g3),</span>
+<span id="cb1-10"><a href="analisis-bivariado-variables-categoricas.html#cb1-10" tabindex="-1"></a>              <span class="at">Q1 =</span> <span class="fu">quantile</span>(g3, <span class="fl">0.25</span>),</span>
+<span id="cb1-11"><a href="analisis-bivariado-variables-categoricas.html#cb1-11" tabindex="-1"></a>              <span class="at">Q3 =</span> <span class="fu">quantile</span>(g3, <span class="fl">0.75</span>),</span>
+<span id="cb1-12"><a href="analisis-bivariado-variables-categoricas.html#cb1-12" tabindex="-1"></a>              <span class="at">IQR =</span> <span class="fu">IQR</span>(g3)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="analisis-bivariado-variables-categoricas.html#cb1-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">variable =</span> var,</span>
+<span id="cb1-14"><a href="analisis-bivariado-variables-categoricas.html#cb1-14" tabindex="-1"></a>           <span class="at">niveles  =</span> <span class="fu">as.character</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="analisis-bivariado-variables-categoricas.html#cb1-15" tabindex="-1"></a>    <span class="fu">select</span>(variable, niveles, <span class="fu">everything</span>(), <span class="sc">-</span><span class="fu">all_of</span>(var))</span>
+<span id="cb1-16"><a href="analisis-bivariado-variables-categoricas.html#cb1-16" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="analisis-bivariado-variables-categoricas.html#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="analisis-bivariado-variables-categoricas.html#cb1-18" tabindex="-1"></a>tabla_cat_g3 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(<span class="fu">lapply</span>(factor_vars, make_grp_g3))</span>
+<span id="cb1-19"><a href="analisis-bivariado-variables-categoricas.html#cb1-19" tabindex="-1"></a>tabla_cat_g3</span></code></pre></div>
+<pre><code>## # A tibble: 43 × 11
+##    variable niveles     n media    ds mediana minimo maximo    Q1    Q3   IQR
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 school   GP        349 10.5   4.63      11      0     20     8  14    6   
+##  2 school   MS         46  9.85  4.24      10      0     19     8  12.8  4.75
+##  3 sex      F         208  9.97  4.62      10      0     19     8  13    5   
+##  4 sex      M         187 10.9   4.50      11      0     20     9  14    5   
+##  5 address  R          88  9.51  4.56      10      0     19     7  12    5   
+##  6 address  U         307 10.7   4.56      11      0     20     9  14    5   
+##  7 famsize  GT3       281 10.2   4.70      11      0     20     8  14    6   
+##  8 famsize  LE3       114 11     4.23      11      0     19     9  13.8  4.75
+##  9 pstatus  A          41 11.2   4.29      11      0     19     9  13    4   
+## 10 pstatus  T         354 10.3   4.61      11      0     20     8  14    6   
+## # ℹ 33 more rows</code></pre>
+<div id="interpretacion-de-las-variables-categoricas-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Interpretacion de las variables categoricas<a href="analisis-bivariado-variables-categoricas.html#interpretacion-de-las-variables-categoricas-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El análisis entre la nota final (G3) y las variables categóricas permite identificar diferencias promedio en el rendimiento académico según distintas condiciones personales, familiares y escolares. En general, las variaciones no son drásticas, aunque se observan ciertos patrones interesantes:</p>
+<p>Escuela (school): los estudiantes del colegio GP presentan una media de 10.5 frente a 9.85 en MS, mostrando un rendimiento ligeramente superior en GP</p>
+<p>Sexo (sex): los hombres (10.9) obtienen un promedio algo mayor que las mujeres (9.97), aunque la diferencia no parece muy significativa</p>
+<p>Dirección del domicilio (address): los estudiantes que viven en zonas urbanas (10.7) superan en promedio a quienes viven en zonas rurales (9.5), posiblemente por mejores condiciones de acceso educativo</p>
+<p>Tamaño familiar (famsize): los alumnos con familias más pequeñas (LE3, 11 puntos) muestran un rendimiento superior a los de familias más grandes (GT3, 10.2), lo que puede relacionarse con mayor atención individual y recursos</p>
+<p>Estado parental (pstatus): los estudiantes cuyos padres viven separados (A) tienen una media levemente mayor (11.2) que los que viven juntos (10.3), aunque las diferencias son pequeñas.</p>
+<p>Motivo de elección del colegio (reason): quienes asisten por reputación o por el curso ofrecido tienden a mostrar notas ligeramente mayores que quienes lo hacen por cercanía o razones familiares.</p>
+<p>Tutor (guardian): los estudiantes cuyo tutor es la madre suelen tener una media superior respecto a aquellos con tutor padre u otro familiar.</p>
+<p>Apoyo escolar y familiar (schoolsup y famsup): el apoyo familiar parece tener un efecto más positivo (media ≈ 10.6) que el apoyo escolar formal, que no muestra diferencias marcadas.</p>
+<p>Clases pagadas (paid): quienes no toman clases pagadas tienen un rendimiento muy similar a quienes sí lo hacen, por lo que no se evidencia un efecto fuerte.</p>
+<p>Actividades extracurriculares (activities): las medias son casi iguales, lo que sugiere que participar en actividades fuera del aula no afecta significativamente el promedio.</p>
+<p>Asistencia a guardería (nursery): los alumnos que asistieron a guardería tienden a tener notas ligeramente mayores, lo que puede reflejar una ventaja inicial en hábitos de aprendizaje.</p>
+<p>Deseo de educación superior (higher): la diferencia es clara: los que planean continuar estudios superiores alcanzan mejores promedios.</p>
+<p>Acceso a internet (internet): los que cuentan con acceso en casa (media 10.7) superan a quienes no lo tienen (9.3 aprox.), lo que evidencia la importancia del entorno tecnológico.</p>
+<p>Relación sentimental (romantic): los estudiantes sin pareja logran promedios algo mayores (10.6 vs 9.9), lo que podría reflejar mayor enfoque académico.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analisis-bivariado-variables-numericas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boxplot-g3-vs-school.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/08.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

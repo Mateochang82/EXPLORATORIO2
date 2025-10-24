@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Análisis de las variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI</title>
+  <meta name="description" content="Ejemplo mínimo" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Análisis de las variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Ejemplo mínimo" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Análisis de las variables categoricas | Análisis Exploratorio de Datos: Student Performance UCI" />
+  
+  <meta name="twitter:description" content="Ejemplo mínimo" />
+  
+
+<meta name="author" content="Mateo Chang y Nino Cabrera" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="applications.html"/>
+<link rel="next" href="distribucion-de-la-variable-school.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1. Introducción y Objetivos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objetivo-general"><i class="fa fa-check"></i><b>1.1</b> Objetivo general</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> 2. Preparación y Estructura de los Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> Interpretacion de los datos</a></li>
+<li class="chapter" data-level="2.2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#mapa-de-valores-nulos"><i class="fa fa-check"></i><b>2.2</b> Mapa de valores Nulos</a></li>
+<li class="chapter" data-level="2.3" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-del-missingness-map"><i class="fa fa-check"></i><b>2.3</b> Interpretacion del missingness map</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html"><i class="fa fa-check"></i><b>3</b> Analisis de nuestra variable objetivo G3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-la-variable"><i class="fa fa-check"></i><b>3.1</b> Interpretacion de la variable</a></li>
+<li class="chapter" data-level="3.2" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#histograma-y-boxplot"><i class="fa fa-check"></i><b>3.2</b> Histograma y boxplot</a></li>
+<li class="chapter" data-level="3.3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-los-graficos"><i class="fa fa-check"></i><b>3.3</b> Interpretacion de los graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de las variables categoricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html#interpretacion-de-las-variables-categoricas"><i class="fa fa-check"></i><b>5.1</b> Interpretacion de las variables categoricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html"><i class="fa fa-check"></i><b>6</b> Distribucion de la variable School</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html#por-donde-vamos"><i class="fa fa-check"></i><b>6.1</b> Por donde vamos ?</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos: Student Performance UCI</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análisis-de-las-variables-categoricas" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Análisis de las variables categoricas<a href="análisis-de-las-variables-categoricas.html#an%C3%A1lisis-de-las-variables-categoricas" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análisis-de-las-variables-categoricas.html#cb1-1" tabindex="-1"></a>make_tab <span class="ot">&lt;-</span> <span class="cf">function</span>(var){</span>
+<span id="cb1-2"><a href="análisis-de-las-variables-categoricas.html#cb1-2" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="análisis-de-las-variables-categoricas.html#cb1-3" tabindex="-1"></a>    <span class="fu">count</span>(.data[[var]], <span class="at">name =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="análisis-de-las-variables-categoricas.html#cb1-4" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1-5"><a href="análisis-de-las-variables-categoricas.html#cb1-5" tabindex="-1"></a>      <span class="at">Porcentaje =</span> <span class="fu">round</span>(Frecuencia <span class="sc">/</span> <span class="fu">sum</span>(Frecuencia) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>),</span>
+<span id="cb1-6"><a href="análisis-de-las-variables-categoricas.html#cb1-6" tabindex="-1"></a>      <span class="at">Variable   =</span> var</span>
+<span id="cb1-7"><a href="análisis-de-las-variables-categoricas.html#cb1-7" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="análisis-de-las-variables-categoricas.html#cb1-8" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Categoria =</span> <span class="sc">!!</span>var) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="análisis-de-las-variables-categoricas.html#cb1-9" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Categoria =</span> <span class="fu">as.character</span>(Categoria)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb1-10"><a href="análisis-de-las-variables-categoricas.html#cb1-10" tabindex="-1"></a>    <span class="fu">select</span>(Variable, Categoria, Frecuencia, Porcentaje)</span>
+<span id="cb1-11"><a href="análisis-de-las-variables-categoricas.html#cb1-11" tabindex="-1"></a>}</span>
+<span id="cb1-12"><a href="análisis-de-las-variables-categoricas.html#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="análisis-de-las-variables-categoricas.html#cb1-13" tabindex="-1"></a>tabla_categoricas <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(<span class="fu">lapply</span>(factor_vars, make_tab))</span>
+<span id="cb1-14"><a href="análisis-de-las-variables-categoricas.html#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="análisis-de-las-variables-categoricas.html#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="análisis-de-las-variables-categoricas.html#cb1-16" tabindex="-1"></a>tabla_categoricas</span></code></pre></div>
+<pre><code>##      Variable  Categoria Frecuencia Porcentaje
+## 1      school         GP        349      88.35
+## 2      school         MS         46      11.65
+## 3         sex          F        208      52.66
+## 4         sex          M        187      47.34
+## 5     address          R         88      22.28
+## 6     address          U        307      77.72
+## 7     famsize        GT3        281      71.14
+## 8     famsize        LE3        114      28.86
+## 9     pstatus          A         41      10.38
+## 10    pstatus          T        354      89.62
+## 11       mjob    at_home         59      14.94
+## 12       mjob     health         34       8.61
+## 13       mjob      other        141      35.70
+## 14       mjob   services        103      26.08
+## 15       mjob    teacher         58      14.68
+## 16       fjob    at_home         20       5.06
+## 17       fjob     health         18       4.56
+## 18       fjob      other        217      54.94
+## 19       fjob   services        111      28.10
+## 20       fjob    teacher         29       7.34
+## 21     reason     course        145      36.71
+## 22     reason       home        109      27.59
+## 23     reason      other         36       9.11
+## 24     reason reputation        105      26.58
+## 25   guardian     father         90      22.78
+## 26   guardian     mother        273      69.11
+## 27   guardian      other         32       8.10
+## 28  schoolsup         no        344      87.09
+## 29  schoolsup        yes         51      12.91
+## 30     famsup         no        153      38.73
+## 31     famsup        yes        242      61.27
+## 32       paid         no        214      54.18
+## 33       paid        yes        181      45.82
+## 34 activities         no        194      49.11
+## 35 activities        yes        201      50.89
+## 36    nursery         no         81      20.51
+## 37    nursery        yes        314      79.49
+## 38     higher         no         20       5.06
+## 39     higher        yes        375      94.94
+## 40   internet         no         66      16.71
+## 41   internet        yes        329      83.29
+## 42   romantic         no        263      66.58
+## 43   romantic        yes        132      33.42</code></pre>
+<div id="interpretacion-de-las-variables-categoricas" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Interpretacion de las variables categoricas<a href="análisis-de-las-variables-categoricas.html#interpretacion-de-las-variables-categoricas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Las variables categóricas del conjunto de datos describen principalmente aspectos demográficos, familiares y escolares de los estudiantes. Los resultados generales muestran lo siguiente:</p>
+<p>Distribución por colegio: la mayoría pertenece al colegio GP (88%), mientras que solo un 12% estudia en MS, por lo que la muestra está desbalanceada entre instituciones.</p>
+<p>Sexo: la proporción entre mujeres (52.7%) y hombres (47.3%) es bastante equilibrada.</p>
+<p>Tipo de residencia: la gran mayoría vive en zonas urbanas (77.7%), lo cual sugiere que el acceso a recursos educativos es mayor.</p>
+<p>Tamaño familiar: el 71% de los estudiantes pertenece a familias con más de tres miembros (GT3), lo que indica estructuras familiares relativamente amplias.</p>
+<p>Situación parental (pstatus): en casi el 90% de los casos los padres viven juntos, reflejando cierta estabilidad familiar.</p>
+<p>Ocupación de los padres: la madre suele trabajar principalmente en el sector servicios (26%) o otras ocupaciones no especificadas (36%), mientras que el padre se concentra sobre todo en ocupaciones diversas (55%) y servicios (28%).</p>
+<p>Motivo de elección del colegio: el curso ofrecido (37%) y la reputación (27%) son las razones más frecuentes, lo que resalta la importancia académica percibida por los padres y estudiantes.</p>
+<p>Tutor o guardián principal: en la mayoría de los casos es la madre (69%), lo que coincide con patrones tradicionales de cuidado familiar.</p>
+<p>Apoyos escolares: solo un 13% recibe apoyo del colegio (schoolsup), mientras que el 61% recibe apoyo familiar (famsup).</p>
+<p>Clases pagadas y actividades extracurriculares: alrededor del 46% recibe clases pagadas, y el 51% participa en actividades extracurriculares, reflejando un balance entre apoyo académico y recreativo.</p>
+<p>Asistencia a guardería: el 79% asistió a nursery, lo que podría asociarse a una estimulación temprana favorable para el aprendizaje.</p>
+<p>Interés en educación superior: casi todos los estudiantes (95%) expresan intención de continuar estudios (higher = yes).</p>
+<p>Acceso a Internet: el 83% dispone de internet en casa, lo cual facilita el estudio autónomo.</p>
+<p>Situación sentimental: un 33% mantiene una relación romántica, mientras que dos tercios permanecen sin pareja, algo esperable en esta etapa escolar.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="applications.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="distribucion-de-la-variable-school.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/05-summary.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 2. Preparación y Estructura de los Datos | Análisis Exploratorio de Datos: Student Performance UCI</title>
+  <meta name="description" content="Ejemplo mínimo" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 2. Preparación y Estructura de los Datos | Análisis Exploratorio de Datos: Student Performance UCI" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Ejemplo mínimo" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 2. Preparación y Estructura de los Datos | Análisis Exploratorio de Datos: Student Performance UCI" />
+  
+  <meta name="twitter:description" content="Ejemplo mínimo" />
+  
+
+<meta name="author" content="Mateo Chang y Nino Cabrera" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1. Introducción y Objetivos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objetivo-general"><i class="fa fa-check"></i><b>1.1</b> Objetivo general</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> 2. Preparación y Estructura de los Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> Interpretacion de los datos</a></li>
+<li class="chapter" data-level="2.2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#mapa-de-valores-nulos"><i class="fa fa-check"></i><b>2.2</b> Mapa de valores Nulos</a></li>
+<li class="chapter" data-level="2.3" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-del-missingness-map"><i class="fa fa-check"></i><b>2.3</b> Interpretacion del missingness map</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos: Student Performance UCI</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="preparación-y-estructura-de-los-datos" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Capítulo 2</span> 2. Preparación y Estructura de los Datos<a href="preparación-y-estructura-de-los-datos.html#preparaci%C3%B3n-y-estructura-de-los-datos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="preparación-y-estructura-de-los-datos.html#cb1-1" tabindex="-1"></a><span class="co"># LIBRERIAS USADAS </span></span>
+<span id="cb1-2"><a href="preparación-y-estructura-de-los-datos.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="preparación-y-estructura-de-los-datos.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-4"><a href="preparación-y-estructura-de-los-datos.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="preparación-y-estructura-de-los-datos.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-6"><a href="preparación-y-estructura-de-los-datos.html#cb1-6" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb1-7"><a href="preparación-y-estructura-de-los-datos.html#cb1-7" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-8"><a href="preparación-y-estructura-de-los-datos.html#cb1-8" tabindex="-1"></a><span class="fu">library</span>(effsize)</span>
+<span id="cb1-9"><a href="preparación-y-estructura-de-los-datos.html#cb1-9" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb1-10"><a href="preparación-y-estructura-de-los-datos.html#cb1-10" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb1-11"><a href="preparación-y-estructura-de-los-datos.html#cb1-11" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-12"><a href="preparación-y-estructura-de-los-datos.html#cb1-12" tabindex="-1"></a><span class="fu">library</span>(coin)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="preparación-y-estructura-de-los-datos.html#cb2-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;docs/student-mat.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span>
+<span id="cb2-2"><a href="preparación-y-estructura-de-los-datos.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="preparación-y-estructura-de-los-datos.html#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="preparación-y-estructura-de-los-datos.html#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="preparación-y-estructura-de-los-datos.html#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="preparación-y-estructura-de-los-datos.html#cb2-6" tabindex="-1"></a><span class="co"># Estandarización de nombres de columnas</span></span>
+<span id="cb2-7"><a href="preparación-y-estructura-de-los-datos.html#cb2-7" tabindex="-1"></a><span class="fu">names</span>(datos) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;_&quot;</span>, <span class="fu">names</span>(datos)))</span>
+<span id="cb2-8"><a href="preparación-y-estructura-de-los-datos.html#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="preparación-y-estructura-de-los-datos.html#cb2-9" tabindex="-1"></a><span class="co"># Definición de tipos de variables</span></span>
+<span id="cb2-10"><a href="preparación-y-estructura-de-los-datos.html#cb2-10" tabindex="-1"></a>factor_vars_base  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;school&quot;</span>,<span class="st">&quot;sex&quot;</span>,<span class="st">&quot;address&quot;</span>,<span class="st">&quot;famsize&quot;</span>,<span class="st">&quot;pstatus&quot;</span>,<span class="st">&quot;mjob&quot;</span>,<span class="st">&quot;fjob&quot;</span>,<span class="st">&quot;reason&quot;</span>,</span>
+<span id="cb2-11"><a href="preparación-y-estructura-de-los-datos.html#cb2-11" tabindex="-1"></a>                       <span class="st">&quot;guardian&quot;</span>,<span class="st">&quot;schoolsup&quot;</span>,<span class="st">&quot;famsup&quot;</span>,<span class="st">&quot;paid&quot;</span>,<span class="st">&quot;activities&quot;</span>,<span class="st">&quot;nursery&quot;</span>,</span>
+<span id="cb2-12"><a href="preparación-y-estructura-de-los-datos.html#cb2-12" tabindex="-1"></a>                       <span class="st">&quot;higher&quot;</span>,<span class="st">&quot;internet&quot;</span>,<span class="st">&quot;romantic&quot;</span>)</span>
+<span id="cb2-13"><a href="preparación-y-estructura-de-los-datos.html#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="preparación-y-estructura-de-los-datos.html#cb2-14" tabindex="-1"></a>numeric_vars_base <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;age&quot;</span>,<span class="st">&quot;medu&quot;</span>,<span class="st">&quot;fedu&quot;</span>,<span class="st">&quot;traveltime&quot;</span>,<span class="st">&quot;studytime&quot;</span>,<span class="st">&quot;failures&quot;</span>,</span>
+<span id="cb2-15"><a href="preparación-y-estructura-de-los-datos.html#cb2-15" tabindex="-1"></a>                       <span class="st">&quot;famrel&quot;</span>,<span class="st">&quot;freetime&quot;</span>,<span class="st">&quot;goout&quot;</span>,<span class="st">&quot;dalc&quot;</span>,<span class="st">&quot;walc&quot;</span>,<span class="st">&quot;health&quot;</span>,</span>
+<span id="cb2-16"><a href="preparación-y-estructura-de-los-datos.html#cb2-16" tabindex="-1"></a>                       <span class="st">&quot;absences&quot;</span>,<span class="st">&quot;g1&quot;</span>,<span class="st">&quot;g2&quot;</span>,<span class="st">&quot;g3&quot;</span>)</span>
+<span id="cb2-17"><a href="preparación-y-estructura-de-los-datos.html#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="preparación-y-estructura-de-los-datos.html#cb2-18" tabindex="-1"></a><span class="co"># Conversión de tipos </span></span>
+<span id="cb2-19"><a href="preparación-y-estructura-de-los-datos.html#cb2-19" tabindex="-1"></a>datos[<span class="fu">intersect</span>(factor_vars_base,  <span class="fu">names</span>(datos))]  <span class="ot">&lt;-</span> </span>
+<span id="cb2-20"><a href="preparación-y-estructura-de-los-datos.html#cb2-20" tabindex="-1"></a>  <span class="fu">lapply</span>(datos[<span class="fu">intersect</span>(factor_vars_base,  <span class="fu">names</span>(datos))],  factor)</span>
+<span id="cb2-21"><a href="preparación-y-estructura-de-los-datos.html#cb2-21" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="preparación-y-estructura-de-los-datos.html#cb2-22" tabindex="-1"></a>datos[<span class="fu">intersect</span>(numeric_vars_base, <span class="fu">names</span>(datos))] <span class="ot">&lt;-</span> </span>
+<span id="cb2-23"><a href="preparación-y-estructura-de-los-datos.html#cb2-23" tabindex="-1"></a>  <span class="fu">lapply</span>(datos[<span class="fu">intersect</span>(numeric_vars_base, <span class="fu">names</span>(datos))], as.numeric)</span>
+<span id="cb2-24"><a href="preparación-y-estructura-de-los-datos.html#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="preparación-y-estructura-de-los-datos.html#cb2-25" tabindex="-1"></a><span class="co"># Listas finales</span></span>
+<span id="cb2-26"><a href="preparación-y-estructura-de-los-datos.html#cb2-26" tabindex="-1"></a>factor_vars  <span class="ot">&lt;-</span> <span class="fu">intersect</span>(factor_vars_base,  <span class="fu">names</span>(datos))</span>
+<span id="cb2-27"><a href="preparación-y-estructura-de-los-datos.html#cb2-27" tabindex="-1"></a>numeric_vars <span class="ot">&lt;-</span> <span class="fu">intersect</span>(numeric_vars_base, <span class="fu">names</span>(datos))</span>
+<span id="cb2-28"><a href="preparación-y-estructura-de-los-datos.html#cb2-28" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="preparación-y-estructura-de-los-datos.html#cb2-29" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="preparación-y-estructura-de-los-datos.html#cb2-30" tabindex="-1"></a><span class="fu">dim</span>(datos)               </span></code></pre></div>
+<pre><code>## [1] 395  33</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="preparación-y-estructura-de-los-datos.html#cb4-1" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">names</span>(datos))       </span></code></pre></div>
+<pre><code>## [1] &quot;walc&quot;     &quot;health&quot;   &quot;absences&quot; &quot;g1&quot;       &quot;g2&quot;       &quot;g3&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="preparación-y-estructura-de-los-datos.html#cb6-1" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="st">&quot;g3&quot;</span> <span class="sc">%in%</span> <span class="fu">names</span>(datos))</span></code></pre></div>
+<div id="interpretacion-de-los-datos" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Interpretacion de los datos<a href="preparación-y-estructura-de-los-datos.html#interpretacion-de-los-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Como podemos ver el dataset contiene <strong>395 estudiantes</strong> y <strong>33 variables</strong>
+Estas 33 variables se dividen en:
+<strong>17 variables categoricas</strong>: Estas incluyen infomracion como el colegio, sexo, ubicacion, ocupacion de los padres etc…
+<strong>16 variables numericas</strong>: Estas abarcan la edad, el nivel educativo de los padres, tiempo de estudia, ausencias, consumo de alcohol etc…</p>
+</div>
+<div id="mapa-de-valores-nulos" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Mapa de valores Nulos<a href="preparación-y-estructura-de-los-datos.html#mapa-de-valores-nulos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preparación-y-estructura-de-los-datos.html#cb7-1" tabindex="-1"></a><span class="fu">missmap</span>(datos)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-5-1.png" width="3000" /></p>
+</div>
+<div id="interpretacion-del-missingness-map" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Interpretacion del missingness map<a href="preparación-y-estructura-de-los-datos.html#interpretacion-del-missingness-map" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El mapa de valores faltan nos deja ver que NO existen valores nulos en el dataset. Todas las 395 observaciones estan completas para las 33 variables, esto tambien lo podemos ver visualmente con el color azul en todo el grafico</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

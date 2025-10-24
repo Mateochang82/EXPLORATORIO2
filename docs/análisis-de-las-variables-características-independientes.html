@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Análisis de las variables características (independientes) | Análisis Exploratorio de Datos: Student Performance UCI</title>
+  <meta name="description" content="Ejemplo mínimo" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Análisis de las variables características (independientes) | Análisis Exploratorio de Datos: Student Performance UCI" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Ejemplo mínimo" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Análisis de las variables características (independientes) | Análisis Exploratorio de Datos: Student Performance UCI" />
+  
+  <meta name="twitter:description" content="Ejemplo mínimo" />
+  
+
+<meta name="author" content="Mateo Chang y Nino Cabrera" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="analisis-de-nuestra-variable-objetivo-g3.html"/>
+<link rel="next" href="análisis-de-las-variables-categoricas.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1. Introducción y Objetivos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#objetivo-general"><i class="fa fa-check"></i><b>1.1</b> Objetivo general</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html"><i class="fa fa-check"></i><b>2</b> 2. Preparación y Estructura de los Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-de-los-datos"><i class="fa fa-check"></i><b>2.1</b> Interpretacion de los datos</a></li>
+<li class="chapter" data-level="2.2" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#mapa-de-valores-nulos"><i class="fa fa-check"></i><b>2.2</b> Mapa de valores Nulos</a></li>
+<li class="chapter" data-level="2.3" data-path="preparación-y-estructura-de-los-datos.html"><a href="preparación-y-estructura-de-los-datos.html#interpretacion-del-missingness-map"><i class="fa fa-check"></i><b>2.3</b> Interpretacion del missingness map</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html"><i class="fa fa-check"></i><b>3</b> Analisis de nuestra variable objetivo G3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-la-variable"><i class="fa fa-check"></i><b>3.1</b> Interpretacion de la variable</a></li>
+<li class="chapter" data-level="3.2" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#histograma-y-boxplot"><i class="fa fa-check"></i><b>3.2</b> Histograma y boxplot</a></li>
+<li class="chapter" data-level="3.3" data-path="analisis-de-nuestra-variable-objetivo-g3.html"><a href="analisis-de-nuestra-variable-objetivo-g3.html#interpretacion-de-los-graficos"><i class="fa fa-check"></i><b>3.3</b> Interpretacion de los graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables características (independientes)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#interpretacion-de-las-variables-numericas-independientes"><i class="fa fa-check"></i><b>4.1</b> Interpretacion de las variables numericas independientes</a></li>
+<li class="chapter" data-level="4.2" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#boxplots-de-todas-las-num%C3%A9ricas-independientes"><i class="fa fa-check"></i><b>4.2</b> Boxplots de TODAS las numéricas independientes</a></li>
+<li class="chapter" data-level="4.3" data-path="análisis-de-las-variables-características-independientes.html"><a href="análisis-de-las-variables-características-independientes.html#interpretacion-del-histograma-y-los-boxplot"><i class="fa fa-check"></i><b>4.3</b> Interpretacion del histograma y los boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de las variables categoricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-las-variables-categoricas.html"><a href="análisis-de-las-variables-categoricas.html#interpretacion-de-las-variables-categoricas"><i class="fa fa-check"></i><b>5.1</b> Interpretacion de las variables categoricas</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html"><i class="fa fa-check"></i><b>6</b> Distribucion de la variable School</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="distribucion-de-la-variable-school.html"><a href="distribucion-de-la-variable-school.html#por-donde-vamos"><i class="fa fa-check"></i><b>6.1</b> Por donde vamos ?</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis Exploratorio de Datos: Student Performance UCI</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análisis-de-las-variables-características-independientes" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Análisis de las variables características (independientes)<a href="análisis-de-las-variables-características-independientes.html#an%C3%A1lisis-de-las-variables-caracter%C3%ADsticas-independientes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análisis-de-las-variables-características-independientes.html#cb1-1" tabindex="-1"></a><span class="co"># age</span></span>
+<span id="cb1-2"><a href="análisis-de-las-variables-características-independientes.html#cb1-2" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="análisis-de-las-variables-características-independientes.html#cb1-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-4"><a href="análisis-de-las-variables-características-independientes.html#cb1-4" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(age),</span>
+<span id="cb1-5"><a href="análisis-de-las-variables-características-independientes.html#cb1-5" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(age),</span>
+<span id="cb1-6"><a href="análisis-de-las-variables-características-independientes.html#cb1-6" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(age),</span>
+<span id="cb1-7"><a href="análisis-de-las-variables-características-independientes.html#cb1-7" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(age),</span>
+<span id="cb1-8"><a href="análisis-de-las-variables-características-independientes.html#cb1-8" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(age),</span>
+<span id="cb1-9"><a href="análisis-de-las-variables-características-independientes.html#cb1-9" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(age),</span>
+<span id="cb1-10"><a href="análisis-de-las-variables-características-independientes.html#cb1-10" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(age, <span class="fl">0.25</span>),</span>
+<span id="cb1-11"><a href="análisis-de-las-variables-características-independientes.html#cb1-11" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(age, <span class="fl">0.75</span>),</span>
+<span id="cb1-12"><a href="análisis-de-las-variables-características-independientes.html#cb1-12" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(age)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="análisis-de-las-variables-características-independientes.html#cb1-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;age&quot;</span>) <span class="ot">-&gt;</span> var_num_age</span>
+<span id="cb1-14"><a href="análisis-de-las-variables-características-independientes.html#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="análisis-de-las-variables-características-independientes.html#cb1-15" tabindex="-1"></a><span class="co"># medu</span></span>
+<span id="cb1-16"><a href="análisis-de-las-variables-características-independientes.html#cb1-16" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="análisis-de-las-variables-características-independientes.html#cb1-17" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-18"><a href="análisis-de-las-variables-características-independientes.html#cb1-18" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(medu),</span>
+<span id="cb1-19"><a href="análisis-de-las-variables-características-independientes.html#cb1-19" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(medu),</span>
+<span id="cb1-20"><a href="análisis-de-las-variables-características-independientes.html#cb1-20" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(medu),</span>
+<span id="cb1-21"><a href="análisis-de-las-variables-características-independientes.html#cb1-21" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(medu),</span>
+<span id="cb1-22"><a href="análisis-de-las-variables-características-independientes.html#cb1-22" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(medu),</span>
+<span id="cb1-23"><a href="análisis-de-las-variables-características-independientes.html#cb1-23" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(medu),</span>
+<span id="cb1-24"><a href="análisis-de-las-variables-características-independientes.html#cb1-24" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(medu, <span class="fl">0.25</span>),</span>
+<span id="cb1-25"><a href="análisis-de-las-variables-características-independientes.html#cb1-25" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(medu, <span class="fl">0.75</span>),</span>
+<span id="cb1-26"><a href="análisis-de-las-variables-características-independientes.html#cb1-26" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(medu)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-27"><a href="análisis-de-las-variables-características-independientes.html#cb1-27" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;medu&quot;</span>) <span class="ot">-&gt;</span> var_num_medu</span>
+<span id="cb1-28"><a href="análisis-de-las-variables-características-independientes.html#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="análisis-de-las-variables-características-independientes.html#cb1-29" tabindex="-1"></a><span class="co"># fedu</span></span>
+<span id="cb1-30"><a href="análisis-de-las-variables-características-independientes.html#cb1-30" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href="análisis-de-las-variables-características-independientes.html#cb1-31" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-32"><a href="análisis-de-las-variables-características-independientes.html#cb1-32" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(fedu),</span>
+<span id="cb1-33"><a href="análisis-de-las-variables-características-independientes.html#cb1-33" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(fedu),</span>
+<span id="cb1-34"><a href="análisis-de-las-variables-características-independientes.html#cb1-34" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(fedu),</span>
+<span id="cb1-35"><a href="análisis-de-las-variables-características-independientes.html#cb1-35" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(fedu),</span>
+<span id="cb1-36"><a href="análisis-de-las-variables-características-independientes.html#cb1-36" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(fedu),</span>
+<span id="cb1-37"><a href="análisis-de-las-variables-características-independientes.html#cb1-37" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(fedu),</span>
+<span id="cb1-38"><a href="análisis-de-las-variables-características-independientes.html#cb1-38" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(fedu, <span class="fl">0.25</span>),</span>
+<span id="cb1-39"><a href="análisis-de-las-variables-características-independientes.html#cb1-39" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(fedu, <span class="fl">0.75</span>),</span>
+<span id="cb1-40"><a href="análisis-de-las-variables-características-independientes.html#cb1-40" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(fedu)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-41"><a href="análisis-de-las-variables-características-independientes.html#cb1-41" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;fedu&quot;</span>) <span class="ot">-&gt;</span> var_num_fedu</span>
+<span id="cb1-42"><a href="análisis-de-las-variables-características-independientes.html#cb1-42" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="análisis-de-las-variables-características-independientes.html#cb1-43" tabindex="-1"></a><span class="co"># traveltime</span></span>
+<span id="cb1-44"><a href="análisis-de-las-variables-características-independientes.html#cb1-44" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-45"><a href="análisis-de-las-variables-características-independientes.html#cb1-45" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-46"><a href="análisis-de-las-variables-características-independientes.html#cb1-46" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(traveltime),</span>
+<span id="cb1-47"><a href="análisis-de-las-variables-características-independientes.html#cb1-47" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(traveltime),</span>
+<span id="cb1-48"><a href="análisis-de-las-variables-características-independientes.html#cb1-48" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(traveltime),</span>
+<span id="cb1-49"><a href="análisis-de-las-variables-características-independientes.html#cb1-49" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(traveltime),</span>
+<span id="cb1-50"><a href="análisis-de-las-variables-características-independientes.html#cb1-50" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(traveltime),</span>
+<span id="cb1-51"><a href="análisis-de-las-variables-características-independientes.html#cb1-51" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(traveltime),</span>
+<span id="cb1-52"><a href="análisis-de-las-variables-características-independientes.html#cb1-52" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(traveltime, <span class="fl">0.25</span>),</span>
+<span id="cb1-53"><a href="análisis-de-las-variables-características-independientes.html#cb1-53" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(traveltime, <span class="fl">0.75</span>),</span>
+<span id="cb1-54"><a href="análisis-de-las-variables-características-independientes.html#cb1-54" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(traveltime)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-55"><a href="análisis-de-las-variables-características-independientes.html#cb1-55" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;traveltime&quot;</span>) <span class="ot">-&gt;</span> var_num_traveltime</span>
+<span id="cb1-56"><a href="análisis-de-las-variables-características-independientes.html#cb1-56" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="análisis-de-las-variables-características-independientes.html#cb1-57" tabindex="-1"></a><span class="co"># studytime</span></span>
+<span id="cb1-58"><a href="análisis-de-las-variables-características-independientes.html#cb1-58" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-59"><a href="análisis-de-las-variables-características-independientes.html#cb1-59" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-60"><a href="análisis-de-las-variables-características-independientes.html#cb1-60" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(studytime),</span>
+<span id="cb1-61"><a href="análisis-de-las-variables-características-independientes.html#cb1-61" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(studytime),</span>
+<span id="cb1-62"><a href="análisis-de-las-variables-características-independientes.html#cb1-62" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(studytime),</span>
+<span id="cb1-63"><a href="análisis-de-las-variables-características-independientes.html#cb1-63" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(studytime),</span>
+<span id="cb1-64"><a href="análisis-de-las-variables-características-independientes.html#cb1-64" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(studytime),</span>
+<span id="cb1-65"><a href="análisis-de-las-variables-características-independientes.html#cb1-65" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(studytime),</span>
+<span id="cb1-66"><a href="análisis-de-las-variables-características-independientes.html#cb1-66" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(studytime, <span class="fl">0.25</span>),</span>
+<span id="cb1-67"><a href="análisis-de-las-variables-características-independientes.html#cb1-67" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(studytime, <span class="fl">0.75</span>),</span>
+<span id="cb1-68"><a href="análisis-de-las-variables-características-independientes.html#cb1-68" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(studytime)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-69"><a href="análisis-de-las-variables-características-independientes.html#cb1-69" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;studytime&quot;</span>) <span class="ot">-&gt;</span> var_num_studytime</span>
+<span id="cb1-70"><a href="análisis-de-las-variables-características-independientes.html#cb1-70" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="análisis-de-las-variables-características-independientes.html#cb1-71" tabindex="-1"></a><span class="co"># failures</span></span>
+<span id="cb1-72"><a href="análisis-de-las-variables-características-independientes.html#cb1-72" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-73"><a href="análisis-de-las-variables-características-independientes.html#cb1-73" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-74"><a href="análisis-de-las-variables-características-independientes.html#cb1-74" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(failures),</span>
+<span id="cb1-75"><a href="análisis-de-las-variables-características-independientes.html#cb1-75" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(failures),</span>
+<span id="cb1-76"><a href="análisis-de-las-variables-características-independientes.html#cb1-76" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(failures),</span>
+<span id="cb1-77"><a href="análisis-de-las-variables-características-independientes.html#cb1-77" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(failures),</span>
+<span id="cb1-78"><a href="análisis-de-las-variables-características-independientes.html#cb1-78" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(failures),</span>
+<span id="cb1-79"><a href="análisis-de-las-variables-características-independientes.html#cb1-79" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(failures),</span>
+<span id="cb1-80"><a href="análisis-de-las-variables-características-independientes.html#cb1-80" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(failures, <span class="fl">0.25</span>),</span>
+<span id="cb1-81"><a href="análisis-de-las-variables-características-independientes.html#cb1-81" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(failures, <span class="fl">0.75</span>),</span>
+<span id="cb1-82"><a href="análisis-de-las-variables-características-independientes.html#cb1-82" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(failures)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-83"><a href="análisis-de-las-variables-características-independientes.html#cb1-83" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;failures&quot;</span>) <span class="ot">-&gt;</span> var_num_failures</span>
+<span id="cb1-84"><a href="análisis-de-las-variables-características-independientes.html#cb1-84" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="análisis-de-las-variables-características-independientes.html#cb1-85" tabindex="-1"></a><span class="co"># famrel</span></span>
+<span id="cb1-86"><a href="análisis-de-las-variables-características-independientes.html#cb1-86" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-87"><a href="análisis-de-las-variables-características-independientes.html#cb1-87" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-88"><a href="análisis-de-las-variables-características-independientes.html#cb1-88" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(famrel),</span>
+<span id="cb1-89"><a href="análisis-de-las-variables-características-independientes.html#cb1-89" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(famrel),</span>
+<span id="cb1-90"><a href="análisis-de-las-variables-características-independientes.html#cb1-90" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(famrel),</span>
+<span id="cb1-91"><a href="análisis-de-las-variables-características-independientes.html#cb1-91" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(famrel),</span>
+<span id="cb1-92"><a href="análisis-de-las-variables-características-independientes.html#cb1-92" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(famrel),</span>
+<span id="cb1-93"><a href="análisis-de-las-variables-características-independientes.html#cb1-93" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(famrel),</span>
+<span id="cb1-94"><a href="análisis-de-las-variables-características-independientes.html#cb1-94" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(famrel, <span class="fl">0.25</span>),</span>
+<span id="cb1-95"><a href="análisis-de-las-variables-características-independientes.html#cb1-95" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(famrel, <span class="fl">0.75</span>),</span>
+<span id="cb1-96"><a href="análisis-de-las-variables-características-independientes.html#cb1-96" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(famrel)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-97"><a href="análisis-de-las-variables-características-independientes.html#cb1-97" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;famrel&quot;</span>) <span class="ot">-&gt;</span> var_num_famrel</span>
+<span id="cb1-98"><a href="análisis-de-las-variables-características-independientes.html#cb1-98" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="análisis-de-las-variables-características-independientes.html#cb1-99" tabindex="-1"></a><span class="co"># freetime</span></span>
+<span id="cb1-100"><a href="análisis-de-las-variables-características-independientes.html#cb1-100" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-101"><a href="análisis-de-las-variables-características-independientes.html#cb1-101" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-102"><a href="análisis-de-las-variables-características-independientes.html#cb1-102" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(freetime),</span>
+<span id="cb1-103"><a href="análisis-de-las-variables-características-independientes.html#cb1-103" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(freetime),</span>
+<span id="cb1-104"><a href="análisis-de-las-variables-características-independientes.html#cb1-104" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(freetime),</span>
+<span id="cb1-105"><a href="análisis-de-las-variables-características-independientes.html#cb1-105" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(freetime),</span>
+<span id="cb1-106"><a href="análisis-de-las-variables-características-independientes.html#cb1-106" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(freetime),</span>
+<span id="cb1-107"><a href="análisis-de-las-variables-características-independientes.html#cb1-107" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(freetime),</span>
+<span id="cb1-108"><a href="análisis-de-las-variables-características-independientes.html#cb1-108" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(freetime, <span class="fl">0.25</span>),</span>
+<span id="cb1-109"><a href="análisis-de-las-variables-características-independientes.html#cb1-109" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(freetime, <span class="fl">0.75</span>),</span>
+<span id="cb1-110"><a href="análisis-de-las-variables-características-independientes.html#cb1-110" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(freetime)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-111"><a href="análisis-de-las-variables-características-independientes.html#cb1-111" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;freetime&quot;</span>) <span class="ot">-&gt;</span> var_num_freetime</span>
+<span id="cb1-112"><a href="análisis-de-las-variables-características-independientes.html#cb1-112" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="análisis-de-las-variables-características-independientes.html#cb1-113" tabindex="-1"></a><span class="co"># goout</span></span>
+<span id="cb1-114"><a href="análisis-de-las-variables-características-independientes.html#cb1-114" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-115"><a href="análisis-de-las-variables-características-independientes.html#cb1-115" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-116"><a href="análisis-de-las-variables-características-independientes.html#cb1-116" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(goout),</span>
+<span id="cb1-117"><a href="análisis-de-las-variables-características-independientes.html#cb1-117" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(goout),</span>
+<span id="cb1-118"><a href="análisis-de-las-variables-características-independientes.html#cb1-118" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(goout),</span>
+<span id="cb1-119"><a href="análisis-de-las-variables-características-independientes.html#cb1-119" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(goout),</span>
+<span id="cb1-120"><a href="análisis-de-las-variables-características-independientes.html#cb1-120" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(goout),</span>
+<span id="cb1-121"><a href="análisis-de-las-variables-características-independientes.html#cb1-121" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(goout),</span>
+<span id="cb1-122"><a href="análisis-de-las-variables-características-independientes.html#cb1-122" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(goout, <span class="fl">0.25</span>),</span>
+<span id="cb1-123"><a href="análisis-de-las-variables-características-independientes.html#cb1-123" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(goout, <span class="fl">0.75</span>),</span>
+<span id="cb1-124"><a href="análisis-de-las-variables-características-independientes.html#cb1-124" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(goout)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-125"><a href="análisis-de-las-variables-características-independientes.html#cb1-125" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;goout&quot;</span>) <span class="ot">-&gt;</span> var_num_goout</span>
+<span id="cb1-126"><a href="análisis-de-las-variables-características-independientes.html#cb1-126" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="análisis-de-las-variables-características-independientes.html#cb1-127" tabindex="-1"></a><span class="co"># dalc</span></span>
+<span id="cb1-128"><a href="análisis-de-las-variables-características-independientes.html#cb1-128" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-129"><a href="análisis-de-las-variables-características-independientes.html#cb1-129" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-130"><a href="análisis-de-las-variables-características-independientes.html#cb1-130" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(dalc),</span>
+<span id="cb1-131"><a href="análisis-de-las-variables-características-independientes.html#cb1-131" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(dalc),</span>
+<span id="cb1-132"><a href="análisis-de-las-variables-características-independientes.html#cb1-132" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(dalc),</span>
+<span id="cb1-133"><a href="análisis-de-las-variables-características-independientes.html#cb1-133" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(dalc),</span>
+<span id="cb1-134"><a href="análisis-de-las-variables-características-independientes.html#cb1-134" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(dalc),</span>
+<span id="cb1-135"><a href="análisis-de-las-variables-características-independientes.html#cb1-135" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(dalc),</span>
+<span id="cb1-136"><a href="análisis-de-las-variables-características-independientes.html#cb1-136" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(dalc, <span class="fl">0.25</span>),</span>
+<span id="cb1-137"><a href="análisis-de-las-variables-características-independientes.html#cb1-137" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(dalc, <span class="fl">0.75</span>),</span>
+<span id="cb1-138"><a href="análisis-de-las-variables-características-independientes.html#cb1-138" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(dalc)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-139"><a href="análisis-de-las-variables-características-independientes.html#cb1-139" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;dalc&quot;</span>) <span class="ot">-&gt;</span> var_num_dalc</span>
+<span id="cb1-140"><a href="análisis-de-las-variables-características-independientes.html#cb1-140" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="análisis-de-las-variables-características-independientes.html#cb1-141" tabindex="-1"></a><span class="co"># walc</span></span>
+<span id="cb1-142"><a href="análisis-de-las-variables-características-independientes.html#cb1-142" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-143"><a href="análisis-de-las-variables-características-independientes.html#cb1-143" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-144"><a href="análisis-de-las-variables-características-independientes.html#cb1-144" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(walc),</span>
+<span id="cb1-145"><a href="análisis-de-las-variables-características-independientes.html#cb1-145" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(walc),</span>
+<span id="cb1-146"><a href="análisis-de-las-variables-características-independientes.html#cb1-146" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(walc),</span>
+<span id="cb1-147"><a href="análisis-de-las-variables-características-independientes.html#cb1-147" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(walc),</span>
+<span id="cb1-148"><a href="análisis-de-las-variables-características-independientes.html#cb1-148" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(walc),</span>
+<span id="cb1-149"><a href="análisis-de-las-variables-características-independientes.html#cb1-149" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(walc),</span>
+<span id="cb1-150"><a href="análisis-de-las-variables-características-independientes.html#cb1-150" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(walc, <span class="fl">0.25</span>),</span>
+<span id="cb1-151"><a href="análisis-de-las-variables-características-independientes.html#cb1-151" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(walc, <span class="fl">0.75</span>),</span>
+<span id="cb1-152"><a href="análisis-de-las-variables-características-independientes.html#cb1-152" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(walc)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-153"><a href="análisis-de-las-variables-características-independientes.html#cb1-153" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;walc&quot;</span>) <span class="ot">-&gt;</span> var_num_walc</span>
+<span id="cb1-154"><a href="análisis-de-las-variables-características-independientes.html#cb1-154" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="análisis-de-las-variables-características-independientes.html#cb1-155" tabindex="-1"></a><span class="co"># health</span></span>
+<span id="cb1-156"><a href="análisis-de-las-variables-características-independientes.html#cb1-156" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-157"><a href="análisis-de-las-variables-características-independientes.html#cb1-157" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-158"><a href="análisis-de-las-variables-características-independientes.html#cb1-158" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(health),</span>
+<span id="cb1-159"><a href="análisis-de-las-variables-características-independientes.html#cb1-159" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(health),</span>
+<span id="cb1-160"><a href="análisis-de-las-variables-características-independientes.html#cb1-160" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(health),</span>
+<span id="cb1-161"><a href="análisis-de-las-variables-características-independientes.html#cb1-161" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(health),</span>
+<span id="cb1-162"><a href="análisis-de-las-variables-características-independientes.html#cb1-162" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(health),</span>
+<span id="cb1-163"><a href="análisis-de-las-variables-características-independientes.html#cb1-163" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(health),</span>
+<span id="cb1-164"><a href="análisis-de-las-variables-características-independientes.html#cb1-164" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(health, <span class="fl">0.25</span>),</span>
+<span id="cb1-165"><a href="análisis-de-las-variables-características-independientes.html#cb1-165" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(health, <span class="fl">0.75</span>),</span>
+<span id="cb1-166"><a href="análisis-de-las-variables-características-independientes.html#cb1-166" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(health)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-167"><a href="análisis-de-las-variables-características-independientes.html#cb1-167" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;health&quot;</span>) <span class="ot">-&gt;</span> var_num_health</span>
+<span id="cb1-168"><a href="análisis-de-las-variables-características-independientes.html#cb1-168" tabindex="-1"></a></span>
+<span id="cb1-169"><a href="análisis-de-las-variables-características-independientes.html#cb1-169" tabindex="-1"></a><span class="co"># absences</span></span>
+<span id="cb1-170"><a href="análisis-de-las-variables-características-independientes.html#cb1-170" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-171"><a href="análisis-de-las-variables-características-independientes.html#cb1-171" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-172"><a href="análisis-de-las-variables-características-independientes.html#cb1-172" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(absences),</span>
+<span id="cb1-173"><a href="análisis-de-las-variables-características-independientes.html#cb1-173" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(absences),</span>
+<span id="cb1-174"><a href="análisis-de-las-variables-características-independientes.html#cb1-174" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(absences),</span>
+<span id="cb1-175"><a href="análisis-de-las-variables-características-independientes.html#cb1-175" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(absences),</span>
+<span id="cb1-176"><a href="análisis-de-las-variables-características-independientes.html#cb1-176" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(absences),</span>
+<span id="cb1-177"><a href="análisis-de-las-variables-características-independientes.html#cb1-177" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(absences),</span>
+<span id="cb1-178"><a href="análisis-de-las-variables-características-independientes.html#cb1-178" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(absences, <span class="fl">0.25</span>),</span>
+<span id="cb1-179"><a href="análisis-de-las-variables-características-independientes.html#cb1-179" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(absences, <span class="fl">0.75</span>),</span>
+<span id="cb1-180"><a href="análisis-de-las-variables-características-independientes.html#cb1-180" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(absences)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-181"><a href="análisis-de-las-variables-características-independientes.html#cb1-181" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;absences&quot;</span>) <span class="ot">-&gt;</span> var_num_absences</span>
+<span id="cb1-182"><a href="análisis-de-las-variables-características-independientes.html#cb1-182" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="análisis-de-las-variables-características-independientes.html#cb1-183" tabindex="-1"></a><span class="co"># g1</span></span>
+<span id="cb1-184"><a href="análisis-de-las-variables-características-independientes.html#cb1-184" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-185"><a href="análisis-de-las-variables-características-independientes.html#cb1-185" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-186"><a href="análisis-de-las-variables-características-independientes.html#cb1-186" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(g1),</span>
+<span id="cb1-187"><a href="análisis-de-las-variables-características-independientes.html#cb1-187" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(g1),</span>
+<span id="cb1-188"><a href="análisis-de-las-variables-características-independientes.html#cb1-188" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(g1),</span>
+<span id="cb1-189"><a href="análisis-de-las-variables-características-independientes.html#cb1-189" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(g1),</span>
+<span id="cb1-190"><a href="análisis-de-las-variables-características-independientes.html#cb1-190" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(g1),</span>
+<span id="cb1-191"><a href="análisis-de-las-variables-características-independientes.html#cb1-191" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(g1),</span>
+<span id="cb1-192"><a href="análisis-de-las-variables-características-independientes.html#cb1-192" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(g1, <span class="fl">0.25</span>),</span>
+<span id="cb1-193"><a href="análisis-de-las-variables-características-independientes.html#cb1-193" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(g1, <span class="fl">0.75</span>),</span>
+<span id="cb1-194"><a href="análisis-de-las-variables-características-independientes.html#cb1-194" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(g1)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-195"><a href="análisis-de-las-variables-características-independientes.html#cb1-195" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;g1&quot;</span>) <span class="ot">-&gt;</span> var_num_g1</span>
+<span id="cb1-196"><a href="análisis-de-las-variables-características-independientes.html#cb1-196" tabindex="-1"></a></span>
+<span id="cb1-197"><a href="análisis-de-las-variables-características-independientes.html#cb1-197" tabindex="-1"></a><span class="co"># g2</span></span>
+<span id="cb1-198"><a href="análisis-de-las-variables-características-independientes.html#cb1-198" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-199"><a href="análisis-de-las-variables-características-independientes.html#cb1-199" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-200"><a href="análisis-de-las-variables-características-independientes.html#cb1-200" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">length</span>(g2),</span>
+<span id="cb1-201"><a href="análisis-de-las-variables-características-independientes.html#cb1-201" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(g2),</span>
+<span id="cb1-202"><a href="análisis-de-las-variables-características-independientes.html#cb1-202" tabindex="-1"></a>    <span class="at">ds =</span> <span class="fu">sd</span>(g2),</span>
+<span id="cb1-203"><a href="análisis-de-las-variables-características-independientes.html#cb1-203" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(g2),</span>
+<span id="cb1-204"><a href="análisis-de-las-variables-características-independientes.html#cb1-204" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(g2),</span>
+<span id="cb1-205"><a href="análisis-de-las-variables-características-independientes.html#cb1-205" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(g2),</span>
+<span id="cb1-206"><a href="análisis-de-las-variables-características-independientes.html#cb1-206" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(g2, <span class="fl">0.25</span>),</span>
+<span id="cb1-207"><a href="análisis-de-las-variables-características-independientes.html#cb1-207" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(g2, <span class="fl">0.75</span>),</span>
+<span id="cb1-208"><a href="análisis-de-las-variables-características-independientes.html#cb1-208" tabindex="-1"></a>    <span class="at">IQR =</span> <span class="fu">IQR</span>(g2)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-209"><a href="análisis-de-las-variables-características-independientes.html#cb1-209" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">&quot;g2&quot;</span>) <span class="ot">-&gt;</span> var_num_g2</span>
+<span id="cb1-210"><a href="análisis-de-las-variables-características-independientes.html#cb1-210" tabindex="-1"></a></span>
+<span id="cb1-211"><a href="análisis-de-las-variables-características-independientes.html#cb1-211" tabindex="-1"></a>tabla_num_indep <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb1-212"><a href="análisis-de-las-variables-características-independientes.html#cb1-212" tabindex="-1"></a>  var_num_age, var_num_medu, var_num_fedu, var_num_traveltime, var_num_studytime,</span>
+<span id="cb1-213"><a href="análisis-de-las-variables-características-independientes.html#cb1-213" tabindex="-1"></a>  var_num_failures, var_num_famrel, var_num_freetime, var_num_goout, var_num_dalc,</span>
+<span id="cb1-214"><a href="análisis-de-las-variables-características-independientes.html#cb1-214" tabindex="-1"></a>  var_num_walc, var_num_health, var_num_absences, var_num_g1, var_num_g2</span>
+<span id="cb1-215"><a href="análisis-de-las-variables-características-independientes.html#cb1-215" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-216"><a href="análisis-de-las-variables-características-independientes.html#cb1-216" tabindex="-1"></a>  <span class="fu">select</span>(variable, <span class="fu">everything</span>())</span>
+<span id="cb1-217"><a href="análisis-de-las-variables-características-independientes.html#cb1-217" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="análisis-de-las-variables-características-independientes.html#cb1-218" tabindex="-1"></a>tabla_num_indep</span></code></pre></div>
+<pre><code>##      variable   n      media        ds mediana minimo maximo Q1 Q3 IQR
+## 1         age 395 16.6962025 1.2760427      17     15     22 16 18   2
+## 2        medu 395  2.7493671 1.0947351       3      0      4  2  4   2
+## 3        fedu 395  2.5215190 1.0882005       2      0      4  2  3   1
+## 4  traveltime 395  1.4481013 0.6975048       1      1      4  1  2   1
+## 5   studytime 395  2.0354430 0.8392403       2      1      4  1  2   1
+## 6    failures 395  0.3341772 0.7436510       0      0      3  0  0   0
+## 7      famrel 395  3.9443038 0.8966586       4      1      5  4  5   1
+## 8    freetime 395  3.2354430 0.9988620       3      1      5  3  4   1
+## 9       goout 395  3.1088608 1.1132782       3      1      5  2  4   2
+## 10       dalc 395  1.4810127 0.8907414       1      1      5  1  2   1
+## 11       walc 395  2.2911392 1.2878966       2      1      5  1  3   2
+## 12     health 395  3.5544304 1.3903034       4      1      5  3  5   2
+## 13   absences 395  5.7088608 8.0030957       4      0     75  0  8   8
+## 14         g1 395 10.9088608 3.3191947      11      3     19  8 13   5
+## 15         g2 395 10.7139241 3.7615047      11      0     19  9 13   4</code></pre>
+<div id="interpretacion-de-las-variables-numericas-independientes" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Interpretacion de las variables numericas independientes<a href="análisis-de-las-variables-características-independientes.html#interpretacion-de-las-variables-numericas-independientes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Edad (age): los estudiantes tienen en promedio 16.7 años, con una mediana de 17 y un rango que va de 15 a 22 años. Esto confirma que la muestra corresponde principalmente a adolescentes dentro del ciclo regular de educación secundaria.</p>
+<p>Educación de los padres (medu y fedu): ambas variables tienen valores promedio entre 2 y 3, lo que sugiere que la mayoría de los padres completó como máximo el nivel secundario.</p>
+<p>Tiempo de viaje (traveltime) y tiempo de estudio (studytime): la mayoría de los estudiantes dedica entre 1 y 2 unidades en ambas variables (poco tiempo), indicando trayectos cortos al colegio y rutinas de estudio moderadas.</p>
+<p>Reprobaciones (failures): el promedio es bajo (0.33) y la mediana igual a 0, lo que implica que la mayoría de los estudiantes no ha repetido cursos, aunque existen algunos casos aislados con varias reprobaciones.</p>
+<p>Relaciones familiares, tiempo libre y salidas (famrel, freetime, goout): presentan medias cercanas a 3, lo que denota niveles intermedios de convivencia y socialización.</p>
+<p>Consumo de alcohol (dalc y walc): el consumo diario (dalc) es bajo, mientras que el de fin de semana (walc) aumenta ligeramente, patrón esperado en estudiantes adolescentes.</p>
+<p>Salud (health): con media de 3.55, la mayoría reporta un estado de salud entre regular y bueno.</p>
+<p>Ausencias (absences): la media (5.7) y la desviación alta (8) reflejan un comportamiento muy disperso, indicando que unos pocos estudiantes presentan ausentismo elevado.</p>
+<p>Notas parciales (G1 y G2): tienen medias de 10.9 y 10.7, respectivamente, lo cual anticipa una relación fuerte con la nota final (G3)</p>
+</div>
+<div id="boxplots-de-todas-las-numéricas-independientes" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Boxplots de TODAS las numéricas independientes<a href="análisis-de-las-variables-características-independientes.html#boxplots-de-todas-las-num%C3%A9ricas-independientes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="análisis-de-las-variables-características-independientes.html#cb3-1" tabindex="-1"></a><span class="co"># (Usamos todas las numéricas excepto la respuesta G3)</span></span>
+<span id="cb3-2"><a href="análisis-de-las-variables-características-independientes.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="análisis-de-las-variables-características-independientes.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="análisis-de-las-variables-características-independientes.html#cb3-4" tabindex="-1"></a><span class="co"># 1) age</span></span>
+<span id="cb3-5"><a href="análisis-de-las-variables-características-independientes.html#cb3-5" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>age)) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="análisis-de-las-variables-características-independientes.html#cb3-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#1f77b4&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="análisis-de-las-variables-características-independientes.html#cb3-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de edad&quot;</span>, <span class="at">y=</span><span class="st">&quot;Edad (años)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-8"><a href="análisis-de-las-variables-características-independientes.html#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="análisis-de-las-variables-características-independientes.html#cb3-9" tabindex="-1"></a><span class="co"># 2) medu</span></span>
+<span id="cb3-10"><a href="análisis-de-las-variables-características-independientes.html#cb3-10" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>medu)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="análisis-de-las-variables-características-independientes.html#cb3-11" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#2ca02c&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="análisis-de-las-variables-características-independientes.html#cb3-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de medu&quot;</span>, <span class="at">y=</span><span class="st">&quot;Educación madre (0–4)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-13"><a href="análisis-de-las-variables-características-independientes.html#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="análisis-de-las-variables-características-independientes.html#cb3-14" tabindex="-1"></a><span class="co"># 3) fedu</span></span>
+<span id="cb3-15"><a href="análisis-de-las-variables-características-independientes.html#cb3-15" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>fedu)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="análisis-de-las-variables-características-independientes.html#cb3-16" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#d62728&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="análisis-de-las-variables-características-independientes.html#cb3-17" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de fedu&quot;</span>, <span class="at">y=</span><span class="st">&quot;Educación padre (0–4)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-18"><a href="análisis-de-las-variables-características-independientes.html#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="análisis-de-las-variables-características-independientes.html#cb3-19" tabindex="-1"></a><span class="co"># 4) traveltime</span></span>
+<span id="cb3-20"><a href="análisis-de-las-variables-características-independientes.html#cb3-20" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>traveltime)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="análisis-de-las-variables-características-independientes.html#cb3-21" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#1f77b4&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="análisis-de-las-variables-características-independientes.html#cb3-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de traveltime&quot;</span>, <span class="at">y=</span><span class="st">&quot;Tiempo de viaje (1–4)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-23"><a href="análisis-de-las-variables-características-independientes.html#cb3-23" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="análisis-de-las-variables-características-independientes.html#cb3-24" tabindex="-1"></a><span class="co"># 5) studytime</span></span>
+<span id="cb3-25"><a href="análisis-de-las-variables-características-independientes.html#cb3-25" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>studytime)) <span class="sc">+</span></span>
+<span id="cb3-26"><a href="análisis-de-las-variables-características-independientes.html#cb3-26" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#2ca02c&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-27"><a href="análisis-de-las-variables-características-independientes.html#cb3-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de studytime&quot;</span>, <span class="at">y=</span><span class="st">&quot;Tiempo de estudio (1–4)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-28"><a href="análisis-de-las-variables-características-independientes.html#cb3-28" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="análisis-de-las-variables-características-independientes.html#cb3-29" tabindex="-1"></a><span class="co"># 6) failures</span></span>
+<span id="cb3-30"><a href="análisis-de-las-variables-características-independientes.html#cb3-30" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>failures)) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="análisis-de-las-variables-características-independientes.html#cb3-31" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#d62728&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="análisis-de-las-variables-características-independientes.html#cb3-32" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de failures&quot;</span>, <span class="at">y=</span><span class="st">&quot;Reprobaciones&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-33"><a href="análisis-de-las-variables-características-independientes.html#cb3-33" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="análisis-de-las-variables-características-independientes.html#cb3-34" tabindex="-1"></a><span class="co"># 7) famrel</span></span>
+<span id="cb3-35"><a href="análisis-de-las-variables-características-independientes.html#cb3-35" tabindex="-1"></a>p7 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>famrel)) <span class="sc">+</span></span>
+<span id="cb3-36"><a href="análisis-de-las-variables-características-independientes.html#cb3-36" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#1f77b4&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-37"><a href="análisis-de-las-variables-características-independientes.html#cb3-37" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de famrel&quot;</span>, <span class="at">y=</span><span class="st">&quot;Relación familiar (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-38"><a href="análisis-de-las-variables-características-independientes.html#cb3-38" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="análisis-de-las-variables-características-independientes.html#cb3-39" tabindex="-1"></a><span class="co"># 8) freetime</span></span>
+<span id="cb3-40"><a href="análisis-de-las-variables-características-independientes.html#cb3-40" tabindex="-1"></a>p8 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>freetime)) <span class="sc">+</span></span>
+<span id="cb3-41"><a href="análisis-de-las-variables-características-independientes.html#cb3-41" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#2ca02c&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-42"><a href="análisis-de-las-variables-características-independientes.html#cb3-42" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de freetime&quot;</span>, <span class="at">y=</span><span class="st">&quot;Tiempo libre (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-43"><a href="análisis-de-las-variables-características-independientes.html#cb3-43" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="análisis-de-las-variables-características-independientes.html#cb3-44" tabindex="-1"></a><span class="co"># 9) goout</span></span>
+<span id="cb3-45"><a href="análisis-de-las-variables-características-independientes.html#cb3-45" tabindex="-1"></a>p9 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>goout)) <span class="sc">+</span></span>
+<span id="cb3-46"><a href="análisis-de-las-variables-características-independientes.html#cb3-46" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#d62728&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-47"><a href="análisis-de-las-variables-características-independientes.html#cb3-47" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de goout&quot;</span>, <span class="at">y=</span><span class="st">&quot;Salir con amigos (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-48"><a href="análisis-de-las-variables-características-independientes.html#cb3-48" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="análisis-de-las-variables-características-independientes.html#cb3-49" tabindex="-1"></a><span class="co"># 10) dalc</span></span>
+<span id="cb3-50"><a href="análisis-de-las-variables-características-independientes.html#cb3-50" tabindex="-1"></a>p10 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>dalc)) <span class="sc">+</span></span>
+<span id="cb3-51"><a href="análisis-de-las-variables-características-independientes.html#cb3-51" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#1f77b4&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-52"><a href="análisis-de-las-variables-características-independientes.html#cb3-52" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de dalc&quot;</span>, <span class="at">y=</span><span class="st">&quot;Alcohol entre semana (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-53"><a href="análisis-de-las-variables-características-independientes.html#cb3-53" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="análisis-de-las-variables-características-independientes.html#cb3-54" tabindex="-1"></a><span class="co"># 11) walc</span></span>
+<span id="cb3-55"><a href="análisis-de-las-variables-características-independientes.html#cb3-55" tabindex="-1"></a>p11 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>walc)) <span class="sc">+</span></span>
+<span id="cb3-56"><a href="análisis-de-las-variables-características-independientes.html#cb3-56" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#2ca02c&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-57"><a href="análisis-de-las-variables-características-independientes.html#cb3-57" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de walc&quot;</span>, <span class="at">y=</span><span class="st">&quot;Alcohol fin de semana (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-58"><a href="análisis-de-las-variables-características-independientes.html#cb3-58" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="análisis-de-las-variables-características-independientes.html#cb3-59" tabindex="-1"></a><span class="co"># 12) health</span></span>
+<span id="cb3-60"><a href="análisis-de-las-variables-características-independientes.html#cb3-60" tabindex="-1"></a>p12 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>health)) <span class="sc">+</span></span>
+<span id="cb3-61"><a href="análisis-de-las-variables-características-independientes.html#cb3-61" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#d62728&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-62"><a href="análisis-de-las-variables-características-independientes.html#cb3-62" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de health&quot;</span>, <span class="at">y=</span><span class="st">&quot;Salud (1–5)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-63"><a href="análisis-de-las-variables-características-independientes.html#cb3-63" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="análisis-de-las-variables-características-independientes.html#cb3-64" tabindex="-1"></a><span class="co"># 13) absences</span></span>
+<span id="cb3-65"><a href="análisis-de-las-variables-características-independientes.html#cb3-65" tabindex="-1"></a>p13 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>absences)) <span class="sc">+</span></span>
+<span id="cb3-66"><a href="análisis-de-las-variables-características-independientes.html#cb3-66" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#1f77b4&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-67"><a href="análisis-de-las-variables-características-independientes.html#cb3-67" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de absences&quot;</span>, <span class="at">y=</span><span class="st">&quot;Ausencias&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-68"><a href="análisis-de-las-variables-características-independientes.html#cb3-68" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="análisis-de-las-variables-características-independientes.html#cb3-69" tabindex="-1"></a><span class="co"># 14) g1</span></span>
+<span id="cb3-70"><a href="análisis-de-las-variables-características-independientes.html#cb3-70" tabindex="-1"></a>p14 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>g1)) <span class="sc">+</span></span>
+<span id="cb3-71"><a href="análisis-de-las-variables-características-independientes.html#cb3-71" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#2ca02c&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-72"><a href="análisis-de-las-variables-características-independientes.html#cb3-72" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de G1&quot;</span>, <span class="at">y=</span><span class="st">&quot;Nota G1 (0–20)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-73"><a href="análisis-de-las-variables-características-independientes.html#cb3-73" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="análisis-de-las-variables-características-independientes.html#cb3-74" tabindex="-1"></a><span class="co"># 15) g2</span></span>
+<span id="cb3-75"><a href="análisis-de-las-variables-características-independientes.html#cb3-75" tabindex="-1"></a>p15 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>g2)) <span class="sc">+</span></span>
+<span id="cb3-76"><a href="análisis-de-las-variables-características-independientes.html#cb3-76" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">&quot;#d62728&quot;</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-77"><a href="análisis-de-las-variables-características-independientes.html#cb3-77" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Distribucion de G2&quot;</span>, <span class="at">y=</span><span class="st">&quot;Nota G2 (0–20)&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb3-78"><a href="análisis-de-las-variables-características-independientes.html#cb3-78" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="análisis-de-las-variables-características-independientes.html#cb3-79" tabindex="-1"></a></span>
+<span id="cb3-80"><a href="análisis-de-las-variables-características-independientes.html#cb3-80" tabindex="-1"></a>(p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3) <span class="sc">/</span></span>
+<span id="cb3-81"><a href="análisis-de-las-variables-características-independientes.html#cb3-81" tabindex="-1"></a>(p4 <span class="sc">+</span> p5 <span class="sc">+</span> p6) <span class="sc">/</span></span>
+<span id="cb3-82"><a href="análisis-de-las-variables-características-independientes.html#cb3-82" tabindex="-1"></a>(p7 <span class="sc">+</span> p8 <span class="sc">+</span> p9) <span class="sc">/</span></span>
+<span id="cb3-83"><a href="análisis-de-las-variables-características-independientes.html#cb3-83" tabindex="-1"></a>(p10 <span class="sc">+</span> p11 <span class="sc">+</span> p12) <span class="sc">/</span></span>
+<span id="cb3-84"><a href="análisis-de-las-variables-características-independientes.html#cb3-84" tabindex="-1"></a>(p13 <span class="sc">+</span> p14 <span class="sc">+</span> p15)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="interpretacion-del-histograma-y-los-boxplot" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Interpretacion del histograma y los boxplot<a href="análisis-de-las-variables-características-independientes.html#interpretacion-del-histograma-y-los-boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analisis-de-nuestra-variable-objetivo-g3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-de-las-variables-categoricas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/04-application.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
