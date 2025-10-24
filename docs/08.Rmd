@@ -1,0 +1,106 @@
+# Analisis Bivariado variables categoricas
+
+```{r , include=FALSE}
+
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+```{r}
+make_grp_g3 <- function(var){
+  datos %>%
+    group_by(.data[[var]]) %>%
+    summarise(n = length(g3),
+              media = mean(g3),
+              ds = sd(g3),
+              mediana = median(g3),
+              minimo = min(g3),
+              maximo = max(g3),
+              Q1 = quantile(g3, 0.25),
+              Q3 = quantile(g3, 0.75),
+              IQR = IQR(g3)) %>%
+    mutate(variable = var,
+           niveles  = as.character(.data[[var]])) %>%
+    select(variable, niveles, everything(), -all_of(var))
+}
+
+tabla_cat_g3 <- dplyr::bind_rows(lapply(factor_vars, make_grp_g3))
+tabla_cat_g3
+```
+
+## Interpretacion de las variables categoricas
+El análisis entre la nota final (G3) y las variables categóricas permite identificar diferencias promedio en el rendimiento académico según distintas condiciones personales, familiares y escolares. En general, las variaciones no son drásticas, aunque se observan ciertos patrones interesantes:
+
+Escuela (school): los estudiantes del colegio GP presentan una media de 10.5 frente a 9.85 en MS, mostrando un rendimiento ligeramente superior en GP
+
+Sexo (sex): los hombres (10.9) obtienen un promedio algo mayor que las mujeres (9.97), aunque la diferencia no parece muy significativa
+
+Dirección del domicilio (address): los estudiantes que viven en zonas urbanas (10.7) superan en promedio a quienes viven en zonas rurales (9.5), posiblemente por mejores condiciones de acceso educativo
+
+Tamaño familiar (famsize): los alumnos con familias más pequeñas (LE3, 11 puntos) muestran un rendimiento superior a los de familias más grandes (GT3, 10.2), lo que puede relacionarse con mayor atención individual y recursos
+
+Estado parental (pstatus): los estudiantes cuyos padres viven separados (A) tienen una media levemente mayor (11.2) que los que viven juntos (10.3), aunque las diferencias son pequeñas.
+
+Motivo de elección del colegio (reason): quienes asisten por reputación o por el curso ofrecido tienden a mostrar notas ligeramente mayores que quienes lo hacen por cercanía o razones familiares.
+
+Tutor (guardian): los estudiantes cuyo tutor es la madre suelen tener una media superior respecto a aquellos con tutor padre u otro familiar.
+
+Apoyo escolar y familiar (schoolsup y famsup): el apoyo familiar parece tener un efecto más positivo (media ≈ 10.6) que el apoyo escolar formal, que no muestra diferencias marcadas.
+
+Clases pagadas (paid): quienes no toman clases pagadas tienen un rendimiento muy similar a quienes sí lo hacen, por lo que no se evidencia un efecto fuerte.
+
+Actividades extracurriculares (activities): las medias son casi iguales, lo que sugiere que participar en actividades fuera del aula no afecta significativamente el promedio.
+
+Asistencia a guardería (nursery): los alumnos que asistieron a guardería tienden a tener notas ligeramente mayores, lo que puede reflejar una ventaja inicial en hábitos de aprendizaje.
+
+Deseo de educación superior (higher): la diferencia es clara: los que planean continuar estudios superiores alcanzan mejores promedios.
+
+Acceso a internet (internet): los que cuentan con acceso en casa (media 10.7) superan a quienes no lo tienen (9.3 aprox.), lo que evidencia la importancia del entorno tecnológico.
+
+Relación sentimental (romantic): los estudiantes sin pareja logran promedios algo mayores (10.6 vs 9.9), lo que podría reflejar mayor enfoque académico.

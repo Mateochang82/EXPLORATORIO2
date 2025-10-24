@@ -1,0 +1,217 @@
+# Analisis Bivariado variables numericas
+
+```{r , include=FALSE}
+
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+
+```{r}
+
+# G3 vs age
+datos %>%
+  ggplot(aes(x = age, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Edad (años)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Edad (años)")
+
+# G3 vs medu
+datos %>%
+  ggplot(aes(x = medu, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Educación madre (0–4)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Educación madre (0–4)")
+
+# G3 vs fedu
+datos %>%
+  ggplot(aes(x = fedu, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Educación padre (0–4)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Educación padre (0–4)")
+
+# G3 vs traveltime
+datos %>%
+  ggplot(aes(x = traveltime, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Tiempo de viaje (1–4)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Tiempo de viaje (1–4)")
+
+# G3 vs studytime
+datos %>%
+  ggplot(aes(x = studytime, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Tiempo de estudio (1–4)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Tiempo de estudio (1–4)")
+
+# G3 vs failures
+datos %>%
+  ggplot(aes(x = failures, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Reprobaciones", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Reprobaciones")
+
+# G3 vs famrel
+datos %>%
+  ggplot(aes(x = famrel, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Relación familiar (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Relación familiar (1–5)")
+
+# G3 vs freetime
+datos %>%
+  ggplot(aes(x = freetime, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Tiempo libre (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Tiempo libre (1–5)")
+
+# G3 vs goout
+datos %>%
+  ggplot(aes(x = goout, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Salir con amigos (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Salir con amigos (1–5)")
+
+# G3 vs dalc
+datos %>%
+  ggplot(aes(x = dalc, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Alcohol entre semana (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Alcohol entre semana (1–5)")
+
+# G3 vs walc
+datos %>%
+  ggplot(aes(x = walc, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Alcohol fin de semana (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Alcohol fin de semana (1–5)")
+
+# G3 vs health
+datos %>%
+  ggplot(aes(x = health, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Salud (1–5)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Salud (1–5)")
+
+# G3 vs absences
+datos %>%
+  ggplot(aes(x = absences, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Ausencias", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Ausencias")
+
+# G3 vs g1
+datos %>%
+  ggplot(aes(x = g1, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Nota G1 (0–20)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Nota G1 (0–20)")
+
+# G3 vs g2
+datos %>%
+  ggplot(aes(x = g2, y = g3)) +
+  geom_point(alpha = 0.4, color = "#1E90FF") +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "red") +
+  labs(x = "Nota G2 (0–20)", y = "Nota final (G3)") +
+  theme_bw() +
+  facet_grid(. ~ "Dispersión entre G3 y Nota G2 (0–20)")
+```
+
+## Interpretacion de las variables numericas
+Edad: la pendiente negativa sugiere que a medida que aumenta la edad, la nota final tiende a disminuir ligeramente. Esto puede relacionarse con estudiantes que han repetido años o que muestran menor motivación escolar.
+
+Educación de los padres (Medu, Fedu): se observa una tendencia positiva; es decir, los hijos de padres con mayor nivel educativo tienden a lograr mejores calificaciones, aunque la relación no es muy fuerte.
+
+Tiempo de viaje (Traveltime): el rendimiento disminuye conforme aumenta el tiempo de desplazamiento hacia el colegio, lo que podría deberse a fatiga o pérdida de tiempo de estudio.
+
+Tiempo de estudio (Studytime): presenta una relación positiva leve: los estudiantes que dedican más tiempo al estudio obtienen en promedio mejores notas.
+
+Reprobaciones (Failures): es una de las relaciones más evidentes: a mayor número de reprobaciones previas, menor nota final.
+
+Relación familiar (Famrel): aunque el efecto es pequeño, las mejores relaciones familiares se asocian con un rendimiento ligeramente superior.
+
+Tiempo libre (Freetime): la relación es prácticamente nula; disponer de más o menos tiempo libre no parece influir en la nota final.
+
+Salir con amigos (Goout): muestra una leve relación negativa; los estudiantes con vida social más activa tienden a obtener resultados un poco menores.
+
+Consumo de alcohol diario y de fin de semana (Dalc y Walc): ambas variables presentan pendiente negativa; el aumento en el consumo se asocia con una leve disminución del rendimiento académico.
+
+Salud: no se observa relación clara; la nota final no varía significativamente con la autopercepción de salud.
+
+Ausencias: sorprendentemente, la relación es ligeramente positiva, lo que puede deberse a la presencia de valores atípicos (alumnos con muchas ausencias pero calificaciones altas).
+
+Notas previas (G1 y G2): estas variables muestran las correlaciones más fuertes y positivas, confirmando que el desempeño a lo largo del curso predice directamente la nota final. 

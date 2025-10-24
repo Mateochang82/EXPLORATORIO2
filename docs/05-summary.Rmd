@@ -1,0 +1,106 @@
+# Análisis de las variables categoricas 
+```{r , include=FALSE}
+
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+
+
+```{r}
+
+
+make_tab <- function(var){
+  datos %>%
+    count(.data[[var]], name = "Frecuencia") %>%
+    mutate(
+      Porcentaje = round(Frecuencia / sum(Frecuencia) * 100, 2),
+      Variable   = var
+    ) %>%
+    rename(Categoria = !!var) %>%
+    mutate(Categoria = as.character(Categoria)) %>%  
+    select(Variable, Categoria, Frecuencia, Porcentaje)
+}
+
+tabla_categoricas <- dplyr::bind_rows(lapply(factor_vars, make_tab))
+
+
+tabla_categoricas
+```
+
+## Interpretacion de las variables categoricas
+Las variables categóricas del conjunto de datos describen principalmente aspectos demográficos, familiares y escolares de los estudiantes. Los resultados generales muestran lo siguiente:
+
+Distribución por colegio: la mayoría pertenece al colegio GP (88%), mientras que solo un 12% estudia en MS, por lo que la muestra está desbalanceada entre instituciones.
+
+Sexo: la proporción entre mujeres (52.7%) y hombres (47.3%) es bastante equilibrada.
+
+Tipo de residencia: la gran mayoría vive en zonas urbanas (77.7%), lo cual sugiere que el acceso a recursos educativos es mayor.
+
+Tamaño familiar: el 71% de los estudiantes pertenece a familias con más de tres miembros (GT3), lo que indica estructuras familiares relativamente amplias.
+
+Situación parental (pstatus): en casi el 90% de los casos los padres viven juntos, reflejando cierta estabilidad familiar.
+
+Ocupación de los padres: la madre suele trabajar principalmente en el sector servicios (26%) o otras ocupaciones no especificadas (36%), mientras que el padre se concentra sobre todo en ocupaciones diversas (55%) y servicios (28%).
+
+Motivo de elección del colegio: el curso ofrecido (37%) y la reputación (27%) son las razones más frecuentes, lo que resalta la importancia académica percibida por los padres y estudiantes.
+
+Tutor o guardián principal: en la mayoría de los casos es la madre (69%), lo que coincide con patrones tradicionales de cuidado familiar.
+
+Apoyos escolares: solo un 13% recibe apoyo del colegio (schoolsup), mientras que el 61% recibe apoyo familiar (famsup).
+
+Clases pagadas y actividades extracurriculares: alrededor del 46% recibe clases pagadas, y el 51% participa en actividades extracurriculares, reflejando un balance entre apoyo académico y recreativo.
+
+Asistencia a guardería: el 79% asistió a nursery, lo que podría asociarse a una estimulación temprana favorable para el aprendizaje.
+
+Interés en educación superior: casi todos los estudiantes (95%) expresan intención de continuar estudios (higher = yes).
+
+Acceso a Internet: el 83% dispone de internet en casa, lo cual facilita el estudio autónomo.
+
+Situación sentimental: un 33% mantiene una relación romántica, mientras que dos tercios permanecen sin pareja, algo esperable en esta etapa escolar.

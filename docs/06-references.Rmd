@@ -1,0 +1,84 @@
+# Distribucion de la variable School
+
+```{r , include=FALSE}
+
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+
+
+```{r}
+
+
+tabla_school_b <- datos %>%
+  count(school, name = "Frecuencia") %>%
+  mutate(
+    Porcentaje = round(Frecuencia / sum(Frecuencia) * 100, 1),
+    Etiqueta   = paste0(Frecuencia, " (", Porcentaje, "%)")
+  )
+
+ggplot(tabla_school_b, aes(x = school, y = Frecuencia)) +
+  geom_col(fill = "#008B8B", width = 0.6) +
+  geom_text(aes(label = Etiqueta), vjust = -0.5, size = 5) +
+  facet_wrap(~ "Distribución de la variable school") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(x = "Colegio (school)", y = "Frecuencia (Porcentaje)") +
+  theme_bw(base_size = 14) +
+  theme(
+    plot.title        = element_blank(),
+    strip.background  = element_rect(fill = "gray80", color = NA),
+    strip.text        = element_text(face = "bold"),
+    panel.grid.major.x= element_blank()
+  )
+```
+
+## Por donde vamos ?
+
+Hasta aqui hemos podido interpretar las variables de forma univariada, en los siguientes capitulos veremos un analisis bivariado para ver cómo se relaciona G3 con las demás. Para variables categóricas compararemos medias entre grupos (ANOVA o, si no se cumplen supuestos, Kruskal–Wallis, con sus post-hoc); para numéricas calcularemos correlaciones (Pearson/Spearman) y probaremos un modelo sencillo G3 ~ G2. Con esto pasamos de describir a explicar patrones y tamaños de efecto, guiándonos por lo visto en el univariado.
