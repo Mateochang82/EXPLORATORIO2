@@ -1,0 +1,226 @@
+
+# Verifiquemos si nuestra variable objetivo tiene comportamiento normal
+
+```{r , include=FALSE}
+
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+```{r}
+
+datos %>%
+  dplyr::group_by(school) %>%
+  dplyr::summarise(
+    n      = dplyr::n(),
+    est_ks = suppressWarnings(ks.test(scale(g3), 'pnorm')$statistic),
+    p_ks   = suppressWarnings(ks.test(scale(g3), 'pnorm')$p.value),
+    est_sw = shapiro.test(g3)$statistic,
+    p_sw   = shapiro.test(g3)$p.value,
+    est_lt = lillie.test(g3)$statistic,
+    p_lt   = lillie.test(g3)$p.value
+  )
+
+
+```
+## Interpretacion
+En ambos grupos, los valores de p son menores a 0.05, excepto en la prueba KS del colegio MS, donde el valor es 0.29. Sin embargo, al considerar el resto de pruebas, se rechaza la hipótesis nula de normalidad en ambos casos.
+
+Por lo tanto, la distribución de G3 no sigue una distribución normal ni en el colegio GP ni en el MS. Esto implica que, para comparar el rendimiento entre colegios, deberán utilizarse pruebas no paramétricas
+
+# Verificamos igualdad de varianzas
+
+## Comparación de dos grupos independientes con estadística no paramétrica (G3 y colegio)
+```{r}
+# Igualdad de varianzas (Brown–Forsythe / Levene robusto)
+
+leveneTest(g3 ~ school, data = datos, center = median)
+
+# Mann–Whitney (versión rstatix)
+
+rstatix::wilcox_test(data = datos, formula = g3 ~ school, paired = FALSE)
+
+# Tamaño de efecto r (con IC)
+rstatix::wilcox_effsize(data = datos, formula = g3 ~ school, paired = FALSE, ci = TRUE)
+
+```
+  
+## Interpretacion
+Primero con la prueba de (Levene/Brown) podemos ver que p>0.05, no se rechaza la hipotesis nula de homogeneidad de varianza. Esto confirma que las varianzas de la nota final (G3) son estadísticamente iguales entre los colegios GP y MS, incluso utilizando un método robusto debido a que no hay normalidad
+
+
+Segundo, con la prueba no parametrica de medianas(Mann-Whitney U) dado que p > 0.05, no existe diferencia significativa en las medianas de G3 entre los dos colegios.
+En otras palabras, el desempeño académico promedio es equivalente en ambos grupos, incluso al usar una prueba no paramétrica
+
+# Comparación de dos grupos no pareados con estadística no paramétrica(G3 y higher)
+```{r}
+# Igualdad de varianzas (robusta)
+
+car::leveneTest(g3 ~ higher, data = datos, center = median)
+
+# Alternativa aún más robusta
+
+fligner.test(g3 ~ higher, data = datos)
+
+# Comparación de medianas (Mann–Whitney U)
+
+rstatix::wilcox_test(data = datos, formula = g3 ~ higher, paired = FALSE)
+
+# Tamaño de efecto r (con intervalo de confianza)
+
+rstatix::wilcox_effsize(data = datos, formula = g3 ~ higher, paired = FALSE, ci = TRUE)
+
+```
+## Interpretacion
+
+Las pruebas de Levene y Fligner (p > 0.05) indican que las varianzas son homogéneas entre los grupos, es decir, la dispersión de las notas finales (G3) es similar tanto en quienes desean continuar estudios superiores como en quienes no.
+
+Sin embargo, el test de Mann–Whitney U muestra una diferencia estadísticamente significativa (p = 0.0006) entre los grupos.
+Los estudiantes que respondieron “yes” a la pregunta sobre continuar estudios superiores presentan notas finales más altas que los que respondieron “no”.
+
+# Comparación de dos grupos no pareados con estadística no paramétrica(G3 y studytime) 
+```{r}
+# Convertimos failures en factor
+datos <- datos %>%
+  dplyr::mutate(failures = as.factor(failures))
+
+# Igualdad de varianzas (robusta)
+car::leveneTest(g3 ~ failures, data = datos, center = median)
+
+# Alternativa aún más robusta (Fligner–Killeen)
+fligner.test(g3 ~ failures, data = datos)
+
+# Comparación no paramétrica (Kruskal–Wallis)
+rstatix::kruskal_test(data = datos, formula = g3 ~ failures)
+
+# Comparaciones post-hoc si Kruskal es significativo
+rstatix::dunn_test(data = datos, formula = g3 ~ failures, p.adjust.method = "bonferroni")
+
+```
+## Interpretacion 
+haber reprobado alguna asignatura se asocia con un menor rendimiento académico final, mientras que los estudiantes sin antecedentes de reprobación mantienen las notas más altas.
+
+# Kruskal–Wallis
+```{r}
+# Pruebas no paramétricas para variables con 3 grupos o mas
+
+kruskal.test(g3 ~ mjob, data = datos)
+kruskal.test(g3 ~ fjob, data = datos)
+kruskal.test(g3 ~ reason, data = datos)
+kruskal.test(g3 ~ guardian, data = datos)
+kruskal.test(g3 ~ goout, data = datos)
+kruskal.test(g3 ~ health, data = datos)
+
+
+
+
+```
+
+## Interpretacion 
+
+Despues de haber usado Kruskal–Wallis vemos que no todas las categorias se relacionan igual con G3. Por ejemplo vemos que mjob (trabajo de la madre) y goout (salir con amigos) sí muestran diferencias reales en la nota: χ²(4)=16.13, p=0.0029 y χ²(4)=14.70, p=0.0054. En cambio, fjob, reason, guardian y health no dan evidencia suficiente. Debido a esto toca hacer post hoc para ver que pares difieren.
+
+# Post Hoc
+```{r}
+# Post-hoc tras Kruskal: comparaciones par a par
+pairwise.wilcox.test(datos$g3, datos$mjob,     exact = FALSE, p.adjust.method = "bonferroni")
+pairwise.wilcox.test(datos$g3, datos$goout,    exact = FALSE, p.adjust.method = "bonferroni")
+pairwise.wilcox.test(datos$g3, datos$fjob,     exact = FALSE, p.adjust.method = "bonferroni")
+pairwise.wilcox.test(datos$g3, datos$reason,   exact = FALSE, p.adjust.method = "bonferroni")
+pairwise.wilcox.test(datos$g3, datos$guardian, exact = FALSE, p.adjust.method = "bonferroni")
+pairwise.wilcox.test(datos$g3, datos$health,   exact = FALSE, p.adjust.method = "bonferroni")
+
+```
+## Interpretacion
+mjob = Con base en el ajuste de Bonferroni, se encontraron diferencias significativas entre health vs at_home (p = 0.012) y health vs other (p = 0.021). No se detectaron diferencias en los demás pares (p ≥ 0.108). Esto sugiere que el grupo health se comporta distinto frente a at_home y other en términos de G3.
+
+goout = Con Bonferroni, hubo diferencias para 4 vs 2 (p = 0.035) y 5 vs 2 (p = 0.037). El resto de comparaciones no fue significativo (p ≥ 0.132). Esto indica que los niveles altos de salidas (4–5) difieren del nivel bajo (2) en G3.
+
+fjob ,reason,guardian,health =No se encontraron diferencias significativas entre pares .
+
+# Diagrama de dispersion
+
+```{r}
+datos %>%
+  ggplot(aes(x = g2, y = g3)) +
+  geom_point(color = "blue", size = 3) +
+  geom_smooth(method = "loess", se = TRUE, color = "red") +
+  labs(
+    title = "Relación entre G3 y G2 (tendencia LOESS)",
+    x = "G2 (nota segundo periodo)",
+    y = "G3 (nota final)"
+  ) +
+  theme_bw()
+
+```
+
+Como anteriormente mencionamosno tienen comportamiento normal por lo que pasaremos a ver el coeficiente de correlacion
+
+
+```{r}
+cor.test(datos$g3,datos$g2, method = 'spearman', exact=FALSE)
+```
+
+El análisis de correlación de Spearman entre G2 y G3 mostro un coeficiente p = 0.9571253
+lo que indica una correlación positiva muy alta; es decir,entre mejor sea g2 mejor es g3.
+La prueba de significancia (S = 440391, p-valor < 0,001) permitió rechazar la hipótesis nula de ausencia de correlación, confirmando que la relación observada es estadísticamente significativa.
+
+
+# Conclusiones
+Este análisis exploratorio nos permitió entender a fondo cómo se comporta el rendimiento académico de los estudiantes y qué factores parecen influir más en sus resultados finales.
+
+En primer lugar, las notas finales (G3) se concentran principalmente entre 8 y 14 puntos, con un promedio alrededor de 10. No se observan valores extremos ni distribuciones raras, lo que sugiere que el rendimiento es bastante estable. La mayoría de los estudiantes vive en zonas urbanas, pertenece al colegio GP y proviene de familias numerosas, aunque con niveles educativos de los padres más bien moderados.
+
+Cuando se compararon las notas con otras variables numéricas, la relación fue débil en casi todos los casos: edad, salud, consumo de alcohol o tiempo libre apenas tienen impacto. Lo que sí destaca es la fuerte conexión entre las notas previas (G1 y G2) y la nota final (G3): los estudiantes que empezaron bien, terminaron bien. En otras palabras, el rendimiento tiende a mantenerse constante durante el año.
+
+Las pruebas estadísticas también mostraron que no hay diferencias significativas entre colegios. Ni las medias ni las medianas de las calificaciones difieren de forma importante, y los tamaños de efecto son muy pequeños. Lo mismo ocurre al comparar las notas de los dos cortes (G2 vs G3): los resultados se mantienen prácticamente iguales, sin mejoras ni retrocesos estadísticamente relevantes.
+
+En resumen, los estudiantes presentan un rendimiento académico estable y bastante homogéneo. Las diferencias entre colegios o cortes son mínimas, y las variables personales o familiares no parecen modificar demasiado los resultados. Las calificaciones anteriores siguen siendo el mejor indicador del desempeño final: quien empieza bien, probablemente termina igual de bien.
+
+

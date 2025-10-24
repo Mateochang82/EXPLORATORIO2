@@ -50,3 +50,4 @@ listas-finales
 librerias-usadas
 post-hoc
 interpretacion-5
+análisis-de-las-variables-características-independientes-1

@@ -1,0 +1,19 @@
+book_filename: "bookdown-demo"
+language:
+  ui:
+    chapter_name: "Capítulo "
+delete_merged_file: true
+
+output_dir: "docs"
+
+rmd_files:
+  - index.Rmd
+  - 01-intro.Rmd
+  - 03-method.Rmd
+  - 04-application.Rmd
+  - 05-summary.Rmd
+  - 06-references.Rmd
+  - 07.Rmd
+  - 08.Rmd
+  - 09.Rmd
+  - 10.Rmd

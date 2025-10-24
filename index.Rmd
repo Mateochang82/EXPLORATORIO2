@@ -1,0 +1,27 @@
+---
+title: "Análisis Exploratorio de Datos: Student Performance UCI"
+author: "Mateo Chang y Nino Cabrera"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Ejemplo mínimo"
+---
+
+```{r , include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Introducción y Objetivos
+
+El presente análisis exploratorio de datos tiene como propósito comprender de manera más profunda los factores que influyen en el rendimiento académico de los estudiantes de educación media, tomando como base el conjunto de datos student-mat.csv. Este dataset recopila información sobre aspectos personales, familiares y académicos de los alumnos, junto con variables relacionadas con hábitos de estudio, contexto social y desempeño escolar.
+
+A partir de esta información, se busca identificar patrones, tendencias y relaciones entre las variables explicativas y la nota final del curso (G3), entendida como variable dependiente. El análisis pretende no solo describir los datos, sino también reconocer posibles asociaciones o diferencias significativas entre grupos de estudiantes, según factores como el tiempo de estudio, el apoyo familiar, las características sociodemográficas y los hábitos personales.
+
+## Objetivo general
+
+Realizar un análisis exploratorio del conjunto de datos student-mat para examinar las características, relaciones y diferencias entre variables que puedan explicar el rendimiento académico (G3) de los estudiantes.
+
+
+

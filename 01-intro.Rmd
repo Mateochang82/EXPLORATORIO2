@@ -1,0 +1,86 @@
+# 2. Preparación y Estructura de los Datos
+```{r , include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  warning = FALSE, 
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  dpi = 300
+)
+```
+
+```{r}
+# LIBRERIAS USADAS 
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(GGally)
+library(Amelia)
+library(patchwork)
+library(effsize)
+library(nortest)
+library(rstatix)
+library(car)
+library(coin)
+```
+
+```{r}
+
+
+datos <- read.csv("docs/student-mat.csv", header = TRUE, sep = ";")
+
+
+
+
+# Estandarización de nombres de columnas
+names(datos) <- tolower(gsub("\\.", "_", names(datos)))
+
+# Definición de tipos de variables
+factor_vars_base  <- c("school","sex","address","famsize","pstatus","mjob","fjob","reason",
+                       "guardian","schoolsup","famsup","paid","activities","nursery",
+                       "higher","internet","romantic")
+
+numeric_vars_base <- c("age","medu","fedu","traveltime","studytime","failures",
+                       "famrel","freetime","goout","dalc","walc","health",
+                       "absences","g1","g2","g3")
+
+# Conversión de tipos 
+datos[intersect(factor_vars_base,  names(datos))]  <- 
+  lapply(datos[intersect(factor_vars_base,  names(datos))],  factor)
+
+datos[intersect(numeric_vars_base, names(datos))] <- 
+  lapply(datos[intersect(numeric_vars_base, names(datos))], as.numeric)
+
+# Listas finales
+factor_vars  <- intersect(factor_vars_base,  names(datos))
+numeric_vars <- intersect(numeric_vars_base, names(datos))
+
+
+dim(datos)               
+tail(names(datos))       
+stopifnot("g3" %in% names(datos))
+
+
+```
+
+## Interpretacion de los datos
+Como podemos ver el dataset contiene **395 estudiantes** y **33 variables**
+Estas 33 variables se dividen en:
+**17 variables categoricas**: Estas incluyen infomracion como el colegio, sexo, ubicacion, ocupacion de los padres etc...
+**16 variables numericas**: Estas abarcan la edad, el nivel educativo de los padres, tiempo de estudia, ausencias, consumo de alcohol etc...
+
+## Mapa de valores Nulos
+
+```{r}
+
+missmap(datos)
+
+
+```
+
+## Interpretacion del missingness map
+
+El mapa de valores faltan nos deja ver que NO existen valores nulos en el dataset. Todas las 395 observaciones estan completas para las 33 variables, esto tambien lo podemos ver visualmente con el color azul en todo el grafico
+
+
